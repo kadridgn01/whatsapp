@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Wp — Sohbet</title>
+<title>Müdüre Hanım Rize — Sohbet</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b74ff">
@@ -13,205 +13,291 @@
 
 <style>
 :root{
-  --bg:#efe6df;           /* sayfanın kremimsi arka planı */
-  --paper:#f7f0ea;
-  --chat:#fff;            /* balonlar */
-  --ink:#19212a;          /* metin */
-  --muted:#697787;
-  --blue-1:#2aa0ff;       /* başlık gradyanı */
-  --blue-2:#005bff;
+  --bg:#efe6df;             /* arka plan degrade */
+  --bg-2:#f7eee6;
+  --paper:#ffffff;
+  --bubble:#f2f9ff;
+  --ink:#1f2530;
+  --muted:#7b8a98;
+  --blue-1:#25a0ff;         /* başlık gradyanı */
+  --blue-2:#0b5cff;
+  --me-1:#3aa8ff;           /* benim mesajı gradyan */
+  --me-2:#0b77ff;
   --accent:#0b74ff;
-  --me:#0b77ff;
   --radius:22px;
-  --shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
-  --pad:14px;
-  --gutter: clamp(16px, 3vw, 22px);
+  --shadow:0 2px 14px rgba(0,0,0,.08);
+  --inset: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -1px 0 rgba(0,0,0,.02);
+  --gutter: clamp(14px, 3.6vw, 20px);
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+html,body{margin:0;padding:0;background:linear-gradient(180deg,#dfefff 0%, var(--bg) 10%, var(--bg-2) 100%);color:var(--ink);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   line-height:1.45; -webkit-font-smoothing:antialiased;}
 
-.app{min-height:100dvh; display:flex; flex-direction:column; }
+.app{min-height:100dvh; display:flex; justify-content:flex-start}
 
-/* ==== Üst Bar ==== */
+/* ==== Telefon iskeleti (desktop'ta maket gibi dursun) ==== */
+.phone{ width:100%; max-width:480px; margin:0 auto; background:transparent; }
+
+/* ==== Üst durum çubuğu ==== */
+.status{
+  height:30px; padding: 6px var(--gutter) 0 calc(env(safe-area-inset-left) + var(--gutter));
+  color:#fff; display:flex; align-items:center; gap:8px;
+  background: linear-gradient(180deg, #50b6ff 0%, #0b6dff 92%);
+}
+.clock{ font-weight:700; text-shadow:0 1px 0 rgba(0,0,0,.2); }
+.sb{ margin-left:auto; display:flex; gap:10px; opacity:.95 }
+.sb svg{ width:18px; height:18px; display:block; }
+
+/* ==== Başlık bar ==== */
 .topbar{
   background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
-  color:#fff; padding: env(safe-area-inset-top) var(--gutter) 12px;
-  position:sticky; top:0; z-index:3; box-shadow:0 2px 16px rgba(0,0,0,.15);
+  color:#fff; padding: 10px var(--gutter) 12px; position:sticky; top:0; z-index:10;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  border-bottom-left-radius:18px; border-bottom-right-radius:18px;
 }
-.topbar .row{display:flex; align-items:center; gap:12px; margin-top:10px}
-.topbar .back{
-  width:38px; height:38px; display:grid; place-items:center; border-radius:50%;
-  background:rgba(255,255,255,.15);
+.toprow{display:flex; align-items:center; gap:12px;}
+.back{
+  width:36px; height:36px; border-radius:50%;
+  background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.14));
+  display:grid; place-items:center; box-shadow: var(--inset);
 }
-.topbar h1{
-  font-size:18px; margin:0; font-weight:700; letter-spacing:.2px;
+.back svg{ width:18px; height:18px; color:#fff }
+.avatar{
+  width:36px; height:36px; border-radius:50%; overflow:hidden; flex:0 0 auto;
+  border:2px solid rgba(255,255,255,.55); box-shadow:0 2px 6px rgba(0,0,0,.15);
+  background:#fff url('assets/photo6.jpg') center/cover no-repeat;
 }
-.topbar .meta{ margin-left:auto; display:flex; gap:12px; align-items:center;}
-.icon{ width:22px; height:22px; opacity:.95; }
-.avatar{ width:36px; height:36px; border-radius:50%; flex:0 0 auto;
-  background:#fff url('assets/photo8.jpg') center/cover no-repeat; border:2px solid rgba(255,255,255,.5) }
+.title{ font-size:18px; font-weight:800; letter-spacing:.2px; }
+.actions{ margin-left:auto; display:flex; gap:12px; }
+.actions .btn{
+  width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+  background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.14));
+  box-shadow:var(--inset);
+}
+.actions svg{ width:18px; height:18px; color:#fff }
 
-/* ==== Mesaj Alanı ==== */
-.thread{ padding: 12px var(--gutter) 110px; display:flex; flex-direction:column; gap:14px; }
+/* ==== Thread ==== */
+.thread{ padding: 14px var(--gutter) 110px; display:flex; flex-direction:column; gap:14px; }
 
-.voice{
-  align-self:flex-start; max-width:86%; background:var(--chat); border-radius:20px;
-  border-top-left-radius:6px; padding:10px 12px; box-shadow: var(--shadow);
-  display:flex; align-items:center; gap:10px;
+/* Ses balonu */
+.vbubble{
+  align-self:flex-start; max-width:96%;
+  background:linear-gradient(180deg,#f0fbff,#dff1ff);
+  border-radius:18px; border-top-left-radius:8px;
+  padding:10px; box-shadow:var(--shadow);
+  display:flex; align-items:center; gap:10px; position:relative;
 }
-.voice .avatar{ width:34px; height:34px; border:0; background-image:url('assets/photo6.jpg'); }
-.wave{ flex:1; height:34px; border-radius:16px; background:linear-gradient(180deg,#eaf3ff,#d0e7ff);
-  display:flex; align-items:center; padding:0 10px; position:relative;}
-.wave::after{ content:"09:12"; position:absolute; right:10px; font-size:12px; color:#426; opacity:.6}
-.play{ width:38px; height:38px; border-radius:50%; background:linear-gradient(180deg,#3aa7ff,#0b74ff);
-  display:grid; place-items:center; color:#fff; font-weight:900; }
-.mic{ width:30px; height:30px; border-radius:50%; background:#e9f1ff; display:grid; place-items:center; color:#0b74ff;}
+.vbubble .chip{
+  width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
+  background:linear-gradient(180deg,#e9f4ff,#cfe7ff); color:#0b74ff; box-shadow:var(--inset);
+}
+.vbubble .play{
+  width:38px; height:38px; border-radius:50%; display:grid; place-items:center;
+  background:linear-gradient(180deg,#43b3ff,#0b77ff); color:#fff; font-weight:800;
+  box-shadow:0 6px 18px rgba(11,119,255,.35);
+}
+.wave{ flex:1; height:36px; border-radius:16px; background:linear-gradient(180deg,#eaf3ff,#d3e7ff);
+  position:relative; overflow:hidden; box-shadow:var(--inset); }
+.wave:after{
+  content:"09:12"; position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  color:#5b738e; font-size:12px; font-weight:600; opacity:.8;
+}
+.bar{ position:absolute; bottom:7px; width:2px; background:#7fb2ff; animation:jump 1s infinite ease-in-out; }
+@keyframes jump{ 0%,100%{height:6px} 50%{height:20px} }
 
+/* Mesaj balonları */
 .msg{
-  max-width:88%; padding:14px 16px; border-radius:18px; box-shadow:var(--shadow);
-  line-height:1.5; font-size:16px; background:var(--chat); position:relative;
+  max-width:88%; padding:14px 16px; border-radius:18px; background:linear-gradient(180deg,#f7fdff,#e8f4ff);
+  box-shadow: var(--shadow); position:relative; font-size:16px;
 }
-.msg small{ position:absolute; right:12px; bottom:-18px; color:#7b8a98; font-size:12px; }
-
+.msg:after{ content:attr(data-time); position:absolute; right:12px; bottom:-18px; color:#8192a5; font-size:12px; }
 .msg.me{
-  align-self:flex-end; color:#fff; background: linear-gradient(180deg,#43b3ff,#0b77ff);
-  border-bottom-right-radius:6px;
+  align-self:flex-end; color:#fff;
+  background: linear-gradient(180deg, var(--me-1), var(--me-2));
+  border-bottom-right-radius:8px;
 }
-.msg.me small{ color:#d0e8ff; }
+.msg.me:after{ color:#cfe6ff; }
 
-/* ==== Galeri ==== */
-.gallery{ background:#fff8; border-radius:16px; padding:10px; box-shadow:var(--shadow); }
+/* Galeri kartı */
+.wrap{ background:#ffffffee; border-radius:18px; padding:12px; box-shadow:var(--shadow); }
 .grid{
-  display:grid; gap:10px;
-  grid-template-columns: 1fr 1fr;
+  display:grid; gap:10px; grid-template-columns: 1fr 1fr;
 }
 .card{
-  position:relative; overflow:hidden; border-radius:12px; background:#ddd; aspect-ratio:1/1;
-  box-shadow:0 1px 10px rgba(0,0,0,.05);
+  position:relative; overflow:hidden; border-radius:14px; background:#e6edf5; aspect-ratio:1/1;
+  border:1px solid rgba(0,0,0,.06); box-shadow:0 1px 10px rgba(0,0,0,.06);
 }
 .card.tall{ grid-row:span 2; }
 .card img{ width:100%; height:100%; object-fit:cover; display:block; }
-.badge{ position:absolute; right:6px; bottom:6px; font-size:11px; background:#eef6ff; color:#0b6bff;
-  padding:2px 6px; border-radius:999px; font-weight:700; letter-spacing:.2px; }
+
+.badge{
+  position:absolute; left:8px; bottom:8px; height:22px; min-width:34px; padding:0 8px;
+  display:grid; place-items:center; border-radius:999px; font-weight:800; font-size:12px;
+  background:#fff; color:#0b6bff; border:1px solid #d9e6ff; box-shadow:0 2px 6px rgba(0,0,0,.12);
+}
+.stamp{
+  position:absolute; right:8px; bottom:8px; font-size:12px; color:#fff; font-weight:700;
+  background:rgba(0,0,0,.45); padding:2px 6px; border-radius:6px; letter-spacing:.3px;
+}
 
 .more::before{
-  content:""; position:absolute; inset:0; backdrop-filter: blur(6px); background:rgba(0,0,0,.25);
+  content:""; position:absolute; inset:0; background:rgba(0,0,0,.25); backdrop-filter: blur(8px);
 }
-.more span{ position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-weight:700; font-size:18px; }
+.more span{
+  position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-weight:800; font-size:22px;
+  text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
 
-/* ==== Alt Giriş Çubuğu ==== */
+/* Alt giriş + uçan mikrofon */
 .inputbar{
-  position:fixed; left:0; right:0; bottom:0; z-index:4; padding:10px var(--gutter) env(safe-area-inset-bottom);
-  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--bg) 30%, var(--bg) 100%);
+  position:fixed; left:0; right:0; bottom:0; padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);
+  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--bg-2) 30%, var(--bg-2) 100%);
 }
 .input{
-  background:#fefefe; border-radius:28px; padding:10px 12px; display:flex; align-items:center; gap:10px;
-  box-shadow: var(--shadow); border:1px solid rgba(0,0,0,.06);
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  border-radius:28px; background:linear-gradient(180deg,#ffffff,#f5f7fb); border:1px solid rgba(0,0,0,.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.6);
 }
 .input input{
   flex:1; border:0; outline:0; background:transparent; font-size:16px; color:#1a2430;
 }
-.btn{ width:40px; height:40px; border-radius:14px; display:grid; place-items:center; background:#eef2f6}
-.btn.camera{ background:#eaf3ff; color:#0b74ff }
+.ibtn{ width:40px; height:40px; border-radius:14px; display:grid; place-items:center; background:#eef3f8; }
+.ibtn.blue{ background:linear-gradient(180deg,#e7f1ff,#d6e9ff); color:#0b6dff }
+
 .fab{
-  position: fixed; right:18px; bottom:86px; width:64px; height:64px; border-radius:28px;
-  background: linear-gradient(180deg,#3aa7ff,#0b74ff); display:grid; place-items:center; color:#fff;
-  box-shadow:0 10px 30px rgba(11,116,255,.35);
+  position:fixed; right:18px; bottom:88px; width:64px; height:64px; border-radius:28px;
+  background: linear-gradient(180deg,#43b3ff,#0b77ff); color:#fff; display:grid; place-items:center;
+  box-shadow: 0 14px 30px rgba(11,119,255,.35);
 }
 
-/* ==== Lightbox ==== */
-.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:50; }
+/* Lightbox */
+.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.88); display:none; align-items:center; justify-content:center; z-index:100; }
 .lightbox.show{ display:flex; }
 .lightbox img{ max-width:100vw; max-height:100vh; object-fit:contain; }
 .close{
   position:fixed; top:14px; right:14px; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,.15);
-  display:grid; place-items:center; color:#fff; font-weight:900; font-size:20px;
+  display:grid; place-items:center; color:#fff; font-weight:900; font-size:20px; border:1px solid rgba(255,255,255,.25);
 }
-.ts{ font-size:12px; color:#8192a5; margin-top:8px; display:block; }
 
-/* wider */
-@media (min-width:600px){
-  .app{ align-items:center; }
-  .phone{ width:420px; box-shadow:0 20px 60px rgba(0,0,0,.18); border-radius:28px; overflow:hidden; }
-  body{ background:linear-gradient(180deg,#cfe2ff 0%, #efe6df 44%); }
-  .topbar{ border-top-left-radius:28px; border-top-right-radius:28px; }
+/* masaüstünde ortaya al */
+@media (min-width:640px){
+  .phone{ margin:22px auto; border-radius:28px; overflow:hidden;
+    box-shadow:0 30px 90px rgba(0,0,0,.18); background:linear-gradient(180deg,#e8eefb,#f7efe6)}
 }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="phone">
+
+    <!-- Durum çubuğu -->
+    <div class="status">
+      <div class="clock">17:23</div>
+      <div class="sb" aria-hidden="true">
+        <!-- Sinyal -->
+        <svg viewBox="0 0 24 24" fill="none"><path d="M2 20h2M6 16h2M10 12h2M14 8h2M18 4h2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        <!-- Wi-Fi -->
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 8c5-4 13-4 18 0M6 11c3-3 9-3 12 0M9 14c2-2 4-2 6 0M12 18h0" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        <!-- Batarya -->
+        <svg viewBox="0 0 28 16" fill="none"><rect x="1" y="3" width="22" height="10" rx="2" stroke="white" stroke-width="2"/><rect x="3" y="5" width="18" height="6" rx="1" fill="white"/><rect x="24" y="6" width="3" height="4" rx="1" fill="white"/></svg>
+      </div>
+    </div>
+
+    <!-- Başlık -->
     <header class="topbar">
-      <div class="row">
-        <div class="back" aria-label="Geri">←</div>
-        <div class="avatar"></div>
-        <div>
-          <h1>Müdüre Hanım Rize</h1>
-        </div>
-        <div class="meta">
-          <img class="icon" src="assets/icon-192.png" alt="">
-          <img class="icon" src="assets/icon-192.png" alt="">
-          <img class="icon" src="assets/icon-192.png" alt="">
+      <div class="toprow">
+        <button class="back" aria-label="Geri">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="avatar" title="Profil"></div>
+        <div class="title">Müdüre Hanım Rize</div>
+        <div class="actions">
+          <!-- video -->
+          <div class="btn" title="Görüntülü Ara"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
+          <!-- call -->
+          <div class="btn" title="Ara"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <!-- more -->
+          <div class="btn" title="Daha fazla"><svg viewBox="0 0 24 24" fill="white"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></div>
         </div>
       </div>
     </header>
 
+    <!-- Mesajlar -->
     <main class="thread">
-      <div class="voice">
-        <div class="mic">🎤</div>
-        <div class="play">▶</div>
-        <div class="wave" aria-label="Ses mesajı dalga görünümü"></div>
+
+      <!-- ses mesajı -->
+      <div class="vbubble">
+        <div class="chip" aria-hidden="true">🎙️</div>
+        <div class="play" aria-label="Oynat">▶</div>
+        <div class="wave" aria-label="Ses dalgası">
+          <!-- küçük barlar sadece görsel efekt -->
+          <div class="bar" style="left:14px;"></div>
+          <div class="bar" style="left:20px; animation-delay:.1s"></div>
+          <div class="bar" style="left:26px; animation-delay:.2s"></div>
+          <div class="bar" style="left:32px; animation-delay:.3s"></div>
+          <div class="bar" style="left:38px; animation-delay:.15s"></div>
+          <div class="bar" style="left:44px; animation-delay:.05s"></div>
+          <div class="bar" style="left:50px; animation-delay:.26s"></div>
+        </div>
       </div>
 
-      <div class="msg" style="align-self:flex-start">
-        <div><strong>Kaç gibi burada olursunuz, Güneş Hanım?</strong></div>
-        <small>09:35</small>
+      <!-- gelen mesaj -->
+      <div class="msg" data-time="09:35">
+        <strong>Kaç gibi burada olursunuz, Güneş Hanım?</strong>
       </div>
 
-      <div class="msg me">
+      <!-- giden mavi mesaj -->
+      <div class="msg me" data-time="09:52 ✓✓">
         Öğleden sonra varmış olurum.
-        <small>09:52 ✓✓</small>
       </div>
 
-      <section class="gallery">
+      <!-- galeri kartı -->
+      <section class="wrap">
         <div class="grid">
           <figure class="card tall">
-            <img src="assets/photo1.jpg" alt="Grup sarılması" data-hd="assets/photo1.jpg">
-            <figcaption class="badge">HD</figcaption>
+            <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
+            <div class="badge">HD</div>
+            <div class="stamp">12:52</div>
           </figure>
+
           <figure class="card tall">
-            <img src="assets/photo2.jpg" alt="Yanak yanağa" data-hd="assets/photo2.jpg">
-            <figcaption class="badge">HD</figcaption>
+            <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
+            <div class="badge">HD</div>
+            <div class="stamp">12:52</div>
           </figure>
+
           <figure class="card">
-            <img src="assets/photo3.jpg" alt="Masa başı" data-hd="assets/photo3.jpg">
-            <figcaption class="badge">HD</figcaption>
+            <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
+            <div class="badge">HD</div>
           </figure>
+
           <figure class="card more">
-            <img src="assets/photo4.jpg" alt="Daha fazla" data-hd="assets/photo4.jpg" aria-hidden="true">
+            <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
             <span>+5</span>
           </figure>
         </div>
-        <span class="ts">12:52</span>
       </section>
 
-      <figure class="card" style="border-radius:16px; overflow:hidden">
-        <img src="assets/photo5.jpg" alt="Okul bahçesi" data-hd="assets/photo5.jpg">
+      <!-- tek büyük fotoğraf -->
+      <figure class="card" style="border-radius:18px; overflow:hidden; aspect-ratio:auto">
+        <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
       </figure>
+
     </main>
 
+    <!-- alt giriş alanı -->
     <footer class="inputbar">
       <div class="input">
-        <div class="btn">😊</div>
-        <input aria-label="Mesaj" placeholder="Message">
-        <div class="btn">📎</div>
-        <div class="btn camera">📷</div>
+        <div class="ibtn">😊</div>
+        <input placeholder="Message" aria-label="Mesaj yazın">
+        <div class="ibtn">📎</div>
+        <div class="ibtn blue">📷</div>
       </div>
-      <div class="fab">🎙️</div>
+      <div class="fab" aria-label="Sesli mesaj">🎤</div>
     </footer>
+
   </div>
 </div>
 
@@ -222,51 +308,46 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
 </div>
 
 <script>
-// PWA SW
+// PWA service worker
 if('serviceWorker' in navigator){
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js');
-  });
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
 }
 
 // Lightbox
 const lb = document.getElementById('lightbox');
 const lbImg = lb.querySelector('img');
 const closeBtn = lb.querySelector('.close');
-let galleryImages = [...document.querySelectorAll('.card img')];
+const imgs = [...document.querySelectorAll('.card img')];
 let idx = 0;
 
 function openAt(i){
   idx = i;
-  const el = galleryImages[idx];
+  const el = imgs[idx];
   lbImg.src = el.dataset.hd || el.src;
   lb.classList.add('show');
 }
 function closeLb(){ lb.classList.remove('show'); }
 
-galleryImages.forEach((img, i) => {
-  img.addEventListener('click', () => openAt(i));
-});
+imgs.forEach((img,i)=> img.addEventListener('click',()=> openAt(i)));
 closeBtn.addEventListener('click', closeLb);
-lb.addEventListener('click', (e) => { if(e.target === lb) closeLb(); });
+lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
 
-// Swipe (mobil) ve klavye desteği
-let startX = null;
-lb.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
-lb.addEventListener('touchmove', e => {
-  if(startX === null) return;
-  const dx = e.touches[0].clientX - startX;
-  if(Math.abs(dx) > 60){
-    idx = (idx + (dx<0 ? 1 : -1) + galleryImages.length) % galleryImages.length;
-    openAt(idx);
-    startX = null;
+// swipe & klavye
+let sx=null;
+lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+lb.addEventListener('touchmove',e=>{
+  if(sx===null) return;
+  const dx=e.touches[0].clientX-sx;
+  if(Math.abs(dx)>60){
+    idx=(idx+(dx<0?1:-1)+imgs.length)%imgs.length;
+    openAt(idx); sx=null;
   }
-}, {passive:true});
-document.addEventListener('keydown', e => {
+},{passive:true});
+document.addEventListener('keydown',e=>{
   if(!lb.classList.contains('show')) return;
-  if(e.key === 'Escape') closeLb();
-  if(e.key === 'ArrowRight') openAt((idx+1)%galleryImages.length);
-  if(e.key === 'ArrowLeft') openAt((idx-1+galleryImages.length)%galleryImages.length);
+  if(e.key==='Escape') closeLb();
+  if(e.key==='ArrowRight') openAt((idx+1)%imgs.length);
+  if(e.key==='ArrowLeft') openAt((idx-1+imgs.length)%imgs.length);
 });
 </script>
 </body>
