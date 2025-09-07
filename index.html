@@ -154,6 +154,70 @@ body{
 /* (opsiyonel) metin balonları da soldan gelsin dersen: */
 .msg{ align-self: flex-start; }
 .msg.me{ align-self: flex-end; } /* giden mavi yine sağda kalsın */
+/* ==== TOPBAR: daha kompakt + başlık tek satır ==== */
+.app{ padding:8px var(--gutter) !important; }
+.app-inner{ gap:10px !important; }
+.back{ width:34px !important; height:34px !important; }
+.app .avatar{
+  width:34px !important; height:34px !important;
+  flex:0 0 34px !important; border-radius:50% !important;
+  object-fit:cover !important; display:block !important;
+  border:2px solid rgba(255,255,255,.6) !important;
+}
+.title{
+  font-size:18px !important; font-weight:800 !important;
+  white-space:nowrap !important; overflow:hidden !important;
+  text-overflow:ellipsis !important; max-width:60vw !important;
+}
+.actions .btn{ width:32px !important; height:32px !important; border-radius:10px !important; }
+
+/* ==== FOTO: rozetlerin kaymasını düzelt (ebeveyn hep relative) ==== */
+.photo{
+  position:relative !important;                /* ÖNEMLİ: rozetler için referans */
+  display:block !important;
+  overflow:hidden !important;
+  border-radius:16px !important;
+  aspect-ratio:1/1 !important;                 /* modern tarayıcılar */
+  background:#e6edf5 !important;
+}
+.photo img{
+  width:100% !important; height:100% !important;
+  object-fit:cover !important; object-position:center !important;
+  display:block !important;
+}
+/* Fallback: aspect-ratio yoksa kare kilidi */
+@supports not (aspect-ratio: 1 / 1) {
+  .photo::before{ content:""; display:block; padding-top:100%; }
+  .photo img{ position:absolute; inset:0; }
+}
+
+/* Rozet konumları */
+.badge{
+  left:8px !important; bottom:8px !important;
+  height:18px !important; min-width:28px !important; padding:0 6px !important;
+  border-radius:999px !important; font-size:10px !important; font-weight:800 !important;
+  background:#fff !important; color:#0b6bff !important;
+  border:1px solid rgba(255,255,255,.9) !important;
+  box-shadow:0 1px 3px rgba(0,0,0,.12) !important;
+}
+.stamp{
+  right:8px !important; bottom:8px !important;
+  color:#fff !important; font-weight:800 !important; font-size:12px !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.45) !important;
+}
+
+/* ==== Foto kartları “karşıdan gelmiş” gibi solda, sağda boşluk ==== */
+.photo-card{
+  align-self:flex-start !important;
+  max-width:86% !important;        /* sağda boşluk – 82–90 arası oynat */
+  margin-left:0 !important; margin-right:0 !important;
+  padding:10px !important; border-radius:22px !important;
+  border:2px solid var(--sheet-border) !important; box-shadow:var(--shadow-1) !important;
+}
+
+/* Mesaj balonları hizası (gelen solda, giden sağda) */
+.msg{ align-self:flex-start !important; }
+.msg.me{ align-self:flex-end !important; }
 
 </style>
 </head>
@@ -175,8 +239,11 @@ body{
       <button class="back" aria-label="Geri">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-    <img class="avatar" src="assets/avatar.jpg" alt="Profil">
-      <div class="title">Müdüre Hanım Rize</div>
+   <img class="avatar"
+     src="assets/avatar.jpg"
+     alt="Profil"
+     onerror="this.onerror=null; this.src='assets/photo6.jpg';">
+      <div class="title">Müdire Hanım Rize</div>
       <div class="actions">
         <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
         <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
