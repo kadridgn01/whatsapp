@@ -555,11 +555,6 @@ body{
 <!-- sabit mavi üst bant -->
 <div class="topcoat" aria-hidden="true"></div>
 
-<div class="app"> … </div>
-<!-- Bar kadar boşluk bırak: içerik barın altından başlasın -->
-<div class="app-spacer"></div>
-
-
   <!-- APP BAR -->
   <div class="app">
     <div class="app-inner">
@@ -762,84 +757,48 @@ body{
 const lb = document.getElementById('lightbox');
 const lbImg = lb.querySelector('img');
 const closeBtn = lb.querySelector('.close');
-const photos = [...document.querySelectorAll('.photo')];
-
-let idx = 0;
-function openAt(i){ idx = i; lbImg.src = photos[i].getAttribute('href'); lb.style.display = 'flex'; }
-function closeLb(){ lb.style.display = 'none'; }
-
-photos.forEach((a,i)=>{
-  a.addEventListener('click', e=>{ e.preventDefault(); openAt(i); });
-});
-closeBtn.addEventListener('click', closeLb);
-lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
-
-// touch swipe
-let startX = null;
-lb.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
-lb.addEventListener('touchmove', e=>{
-  if(startX===null) return;
-  const dx = e.touches[0].clientX - startX;
-  if(Math.abs(dx) > 60){
-    idx = (idx + (dx < 0 ? 1 : -1) + photos.length) % photos.length;
-    lbImg.src = photos[idx].getAttribute('href');
-    startX = null;
-  }
-}, {passive:true});
-// klavye ile gezinme (masaüstü)
-addEventListener('keydown', e=>{
-  if(lb.style.display !== 'flex') return;
-  if(e.key==='Escape') closeLb();
-  if(e.key==='ArrowRight') { idx = (idx+1)%photos.length; lbImg.src = photos[idx].getAttribute('href'); }
-  if(e.key==='ArrowLeft')  { idx = (idx-1+photos.length)%photos.length; lbImg.src = photos[idx].getAttribute('href'); }
-});
-  <script>
-<script>
-const lb = document.getElementById('lightbox');
-const lbImg = lb.querySelector('img');
-const closeBtn = lb.querySelector('.close');
-
-const photos = [...document.querySelectorAll('.photo')];
+const photos = Array.from(document.querySelectorAll('.photo'));
 
 let idx = 0;
 const srcOf = (el) => el.dataset.hd || el.querySelector('img').src;
 
 function openAt(i){
   idx = i;
-  lbImg.src = srcOf(photos[i]);
+  lbImg.src = srcOf(photos[idx]);
   lb.style.display = 'flex';
 }
 function closeLb(){ lb.style.display = 'none'; }
 
+// tıklayınca aç
 photos.forEach((el,i)=>{
-  // hem click hem touch/pointer güvenli
   el.addEventListener('click', (e)=>{ e.preventDefault(); openAt(i); });
 });
 
+// kapatma
 closeBtn.addEventListener('click', closeLb);
-lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
+lb.addEventListener('click', e=>{ if(e.target === lb) closeLb(); });
 
 // swipe ile ileri/geri
-let startX=null;
-lb.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; },{passive:true});
-lb.addEventListener('touchmove',e=>{
-  if(startX===null) return;
+let startX = null;
+lb.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+lb.addEventListener('touchmove', e=>{
+  if(startX === null) return;
   const dx = e.touches[0].clientX - startX;
-  if(Math.abs(dx)>60){
-    idx = (idx + (dx<0?1:-1) + photos.length) % photos.length;
+  if (Math.abs(dx) > 60){
+    idx = (idx + (dx<0 ? 1 : -1) + photos.length) % photos.length;
     lbImg.src = srcOf(photos[idx]);
-    startX=null;
+    startX = null;
   }
-},{passive:true});
-addEventListener('keydown',e=>{
-  if(lb.style.display!=='flex') return;
-  if(e.key==='Escape') closeLb();
-  if(e.key==='ArrowRight'){ idx=(idx+1)%photos.length; lbImg.src=srcOf(photos[idx]); }
-  if(e.key==='ArrowLeft' ){ idx=(idx-1+photos.length)%photos.length; lbImg.src=srcOf(photos[idx]); }
+}, {passive:true});
+
+// klavye (masaüstü)
+document.addEventListener('keydown', e=>{
+  if (lb.style.display !== 'flex') return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight'){ idx = (idx+1) % photos.length; lbImg.src = srcOf(photos[idx]); }
+  if (e.key === 'ArrowLeft' ){ idx = (idx-1+photos.length) % photos.length; lbImg.src = srcOf(photos[idx]); }
 });
 </script>
 
-
-</script>
 </body>
 </html>
