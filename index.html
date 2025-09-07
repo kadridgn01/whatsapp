@@ -142,6 +142,29 @@ html,body{
 @media (min-width:640px){
   .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18);background:linear-gradient(180deg,#e8eefb,#f7efe6)}
 }
+/* === Boşluksuz (no-gap) galeri varyantı === */
+.album.tight{
+  padding:8px;                                      /* 6–10 arası oynatabilirsin */
+  margin-left:  calc(-1 * var(--gutter));
+  margin-right: calc(-1 * var(--gutter));
+}
+.album.tight .grid{ gap:0 }                          /* fotoğraflar arası boşluk: 0 */
+
+.album.tight .tile{
+  border-radius:0;                                   /* iç köşeleri köşeli yap */
+  box-shadow:none;                                   /* bitişik gölge çizgisi olmasın */
+}
+.album.tight .tile::after{ content:none }            /* iç beyaz konturu kapat */
+
+.album.tight .tile:nth-child(1){ border-top-left-radius:16px }
+.album.tight .tile:nth-child(2){ border-top-right-radius:16px }
+.album.tight .tile:nth-child(3){ border-bottom-left-radius:16px }
+.album.tight .tile:nth-child(4){ border-bottom-right-radius:16px }
+
+/* etiketler olduğu yerde kalsın */
+.badge{ left:8px; bottom:8px; }
+.time { right:8px; bottom:8px; }
+
 </style>
 </head>
 <body>
@@ -205,27 +228,30 @@ html,body{
       <span class="time">09:52 ✓✓</span>
     </div>
 
-    <!-- 2×2 kare galeri -->
-    <section class="album">
-      <div class="grid">
-        <figure class="tile">
-          <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-        </figure>
-        <figure class="tile">
-          <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-        </figure>
-        <figure class="tile">
-          <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-        </figure>
-        <figure class="tile more">
-          <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
-          <div class="shade"></div><div class="moretxt">+5</div>
-        </figure>
-      </div>
-    </section>
+    <!-- 2×2 kare galeri — boşluk yok -->
+<section class="album tight">
+  <div class="grid">
+    <figure class="tile">
+      <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
+      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+    </figure>
+
+    <figure class="tile">
+      <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
+      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+    </figure>
+
+    <figure class="tile">
+      <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
+      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+    </figure>
+
+    <figure class="tile more">
+      <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
+      <div class="shade"></div><div class="moretxt">+5</div>
+    </figure>
+  </div>
+</section>
 
     <!-- kare büyük görsel kart içinde -->
     <section class="album square">
