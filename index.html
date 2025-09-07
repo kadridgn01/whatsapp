@@ -9,46 +9,6 @@
 <meta name="apple-mobile-web-app-title" content="Müdüre Hanım Rize">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-/* ==== ÜST BAR TEMİZLİK & iOS SAFE AREA ==== */
-
-/* sahte status bar’ı tamamen gizle (HTML’den silmediysen) */
-.status{ display:none !important; }
-
-/* app bar: üst padding’i notch’a göre ayarla ve daha kompakt yap */
-.app{
-  /* üstte güvenli alan + küçük dikey padding */
-  padding: calc(env(safe-area-inset-top) + 6px) var(--gutter) 8px !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 10 !important;
-}
-
-/* başlık satırı daha sıkı ve tek satır */
-.app-inner{ gap:8px !important; align-items:center !important; }
-.back{ width:32px !important; height:32px !important; }
-
-.app .avatar{
-  width:32px !important; height:32px !important;
-  border-radius:50% !important; object-fit:cover !important;
-  border:2px solid rgba(255,255,255,.6) !important; display:block !important;
-}
-
-.title{
-  flex:1 1 auto !important; min-width:0 !important;
-  white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
-  font-weight:800 !important;
-  font-size:clamp(16px,4.6vw,20px) !important;
-}
-
-.actions{ gap:8px !important; }
-.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
-
-/* çok dar cihazlarda daha da sıkıştır */
-@media (max-width:360px){
-  .actions .btn{ width:28px !important; height:28px !important; }
-  .title{ font-size:clamp(15px,4.8vw,18px) !important; }
-}
-
 <style>
 :root{
   /* buraya avatar görselini koy */
@@ -293,6 +253,45 @@ body{
   .title{ font-size:clamp(15px, 4.8vw, 18px) !important; }
 }
 
+  /* ==== ÜST BAR TEMİZLİK & iOS SAFE AREA ==== */
+
+/* sahte status bar’ı tamamen gizle (HTML’den silmediysen) */
+.status{ display:none !important; }
+
+/* app bar: üst padding’i notch’a göre ayarla ve daha kompakt yap */
+.app{
+  /* üstte güvenli alan + küçük dikey padding */
+  padding: calc(env(safe-area-inset-top) + 6px) var(--gutter) 8px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+
+/* başlık satırı daha sıkı ve tek satır */
+.app-inner{ gap:8px !important; align-items:center !important; }
+.back{ width:32px !important; height:32px !important; }
+
+.app .avatar{
+  width:32px !important; height:32px !important;
+  border-radius:50% !important; object-fit:cover !important;
+  border:2px solid rgba(255,255,255,.6) !important; display:block !important;
+}
+
+.title{
+  flex:1 1 auto !important; min-width:0 !important;
+  white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
+  font-weight:800 !important;
+  font-size:clamp(16px,4.6vw,20px) !important;
+}
+
+.actions{ gap:8px !important; }
+.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
+
+/* çok dar cihazlarda daha da sıkıştır */
+@media (max-width:360px){
+  .actions .btn{ width:28px !important; height:28px !important; }
+  .title{ font-size:clamp(15px,4.8vw,18px) !important; }
+}
 </style>
 </head>
 <body>
