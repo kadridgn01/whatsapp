@@ -385,6 +385,37 @@ body{
   :root{ --appbar-h: 52px; }
   .actions .btn{ width:28px !important; height:28px !important; }
 }
+/* === ÜST BANT sade: sadece safe-area + bar yüksekliği kadar === */
+:root{ --appbar-h: 56px; } /* bar yüksekliği – istersen 54–60 arası oynat */
+
+.topcoat{
+  position:fixed; top:0; left:0; right:0;
+  height: calc(env(safe-area-inset-top) + var(--appbar-h));
+  background: linear-gradient(180deg, var(--blue1), var(--blue2));
+  z-index: 0; pointer-events: none;
+}
+
+/* hero tamamen kapalı (fazla maviyi kaldırır) */
+.hero{ display:none !important; height:0 !important; }
+
+/* bar notch altında yapışık kalsın */
+.app{
+  position: sticky !important;
+  top: env(safe-area-inset-top) !important;
+  z-index: 2 !important;
+  min-height: var(--appbar-h) !important;
+  padding: 0 var(--gutter) !important;
+  display:flex !important; align-items:center !important;
+  background: linear-gradient(180deg, var(--blue1), var(--blue2)) !important;
+}
+
+/* başlık/ikon ölçüleri (tek satır) */
+.app-inner{ width:100%; gap:8px !important; }
+.back{ width:32px !important; height:32px !important; }
+.app .avatar{ width:32px !important; height:32px !important; border-radius:50% !important; object-fit:cover !important; border:2px solid rgba(255,255,255,.6) !important; }
+.title{ flex:1 1 auto !important; min-width:0 !important; white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; font-size:clamp(16px,4.6vw,20px) !important; font-weight:800 !important; }
+.actions{ gap:8px !important; }
+.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
 
 </style>
 </head>
@@ -393,9 +424,6 @@ body{
 <!-- üst boş alan (bar yüksekliğinin 1.5 katı) -->
 <!-- sabit mavi üst bant -->
 <div class="topcoat" aria-hidden="true"></div>
-
-<!-- (varsa) hero -->
-<div class="hero"></div>
 
 <div class="app"> … </div>
 
