@@ -416,6 +416,61 @@ body{
 .title{ flex:1 1 auto !important; min-width:0 !important; white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; font-size:clamp(16px,4.6vw,20px) !important; font-weight:800 !important; }
 .actions{ gap:8px !important; }
 .actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
+/* ===== Sabit (fixed) başlık + güvenli alan ===== */
+:root{ --appbar-h: 56px; } /* bar yüksekliği; 54–60 arası oynatabilirsin */
+
+/* Mavi arkaplan şeridi — bar + status alanını kaplar (overscroll'da da görünür) */
+.topcoat{
+  position:fixed; top:0; left:0; right:0;
+  height: calc(env(safe-area-inset-top) + var(--appbar-h));
+  background: linear-gradient(180deg, var(--blue1), var(--blue2));
+  z-index: 0; pointer-events: none;
+}
+
+/* Bar: her zaman sabit */
+.app{
+  position: fixed !important;
+  top: env(safe-area-inset-top) !important;   /* notch altına yasla */
+  left: 0; right: 0;
+  z-index: 2 !important;
+  min-height: var(--appbar-h) !important;
+  padding: 0 var(--gutter) !important;
+  display:flex !important; align-items:center !important;
+  background: linear-gradient(180deg, var(--blue1), var(--blue2)) !important;
+}
+
+/* İç düzen: tek satır başlık + küçük ikonlar */
+.app-inner{ width:100%; gap:8px !important; }
+.back{ width:32px !important; height:32px !important; }
+.app .avatar{
+  width:32px !important; height:32px !important;
+  border-radius:50% !important; object-fit:cover !important;
+  border:2px solid rgba(255,255,255,.6) !important;
+}
+.title{
+  flex:1 1 auto !important; min-width:0 !important;
+  white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
+  font-weight:800 !important; font-size:clamp(16px,4.6vw,20px) !important;
+}
+.actions{ gap:8px !important; }
+.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
+
+/* İçeriği barın altına iten spacer */
+.app-spacer{
+  height: calc(env(safe-area-inset-top) + var(--appbar-h));
+}
+
+/* Önceden eklediysen hero’yu tamamen kapat (fazla mavi olmasın) */
+.hero{ display:none !important; height:0 !important; }
+
+/* Katmanlama: içerik bar/topcoat üstünde dursun */
+.phone{ position:relative; z-index:1; }
+
+/* Çok dar cihazlar için sıkılaştırma */
+@media (max-width:360px){
+  :root{ --appbar-h: 52px; }
+  .actions .btn{ width:28px !important; height:28px !important; }
+}
 
 </style>
 </head>
@@ -426,6 +481,8 @@ body{
 <div class="topcoat" aria-hidden="true"></div>
 
 <div class="app"> … </div>
+<!-- Bar kadar boşluk bırak: içerik barın altından başlasın -->
+<div class="app-spacer"></div>
 
 
   <!-- APP BAR -->
