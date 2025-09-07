@@ -18,31 +18,35 @@
   --gutter:clamp(14px,3.6vw,20px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,var(--bg-2) 100%);
-  color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased}
+html,body{
+  margin:0;
+  background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,var(--bg-2) 100%);
+  color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  -webkit-font-smoothing:antialiased;
+}
 .phone{max-width:480px;margin:0 auto}
-.status{height:30px;padding:6px var(--gutter) 0;color:#fff;background:linear-gradient(180deg,#50b6ff 0%,#0b6dff 92%);
-  display:flex;align-items:center}
+
+/* durum + başlık */
+.status{height:30px;padding:6px var(--gutter) 0;color:#fff;background:linear-gradient(180deg,#50b6ff 0%,#0b6dff 92%);display:flex;align-items:center}
 .clock{font-weight:700;text-shadow:0 1px 0 rgba(0,0,0,.2)}
 .sb{margin-left:auto;display:flex;gap:10px;opacity:.95}
 .sb svg{width:18px;height:18px}
-.topbar{background:linear-gradient(180deg,var(--blue-1),var(--blue-2));color:#fff;padding:10px var(--gutter) 12px;
-  position:sticky;top:0;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.18);border-bottom-left-radius:18px;border-bottom-right-radius:18px}
+.topbar{background:linear-gradient(180deg,var(--blue-1),var(--blue-2));color:#fff;padding:10px var(--gutter) 12px;position:sticky;top:0;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.18);border-bottom-left-radius:18px;border-bottom-right-radius:18px}
 .toprow{display:flex;align-items:center;gap:12px}
 .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
 .back svg{width:18px;height:18px;color:#fff}
-.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.55);
-  background:#fff url('assets/photo6.jpg') center/cover no-repeat}
+.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.55);background:#fff url('assets/photo6.jpg') center/cover no-repeat}
 .title{font-size:18px;font-weight:800;letter-spacing:.2px}
 .actions{margin-left:auto;display:flex;gap:12px}
 .actions .btn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
 .actions svg{width:18px;height:18px;color:#fff}
+
+/* thread */
 .thread{padding:14px var(--gutter) 88px;display:flex;flex-direction:column;gap:14px}
 
-/* ses */
-.vbubble{align-self:flex-start;max-width:96%;background:linear-gradient(180deg,#f0fbff,#dff1ff);border-radius:18px;border-top-left-radius:8px;
-  padding:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;position:relative}
-.vbubble .chip{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#e9f4ff,#cfe7ff);color:#0b74ff}
+/* ses balonu (mikrofon çipi kaldırıldı) */
+.vbubble{align-self:flex-start;max-width:96%;background:linear-gradient(180deg,#f0fbff,#dff1ff);border-radius:18px;border-top-left-radius:8px;padding:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;position:relative}
 .vbubble .play{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#43b3ff,#0b77ff);color:#fff;font-weight:800}
 .wave{flex:1;height:36px;border-radius:16px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative;overflow:hidden}
 .wave:after{content:"09:12";position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#5b738e;font-size:12px;font-weight:600}
@@ -53,12 +57,26 @@ html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,va
 .msg.me{align-self:flex-end;color:#fff;background:linear-gradient(180deg,var(--me-1),var(--me-2));border-bottom-right-radius:8px}
 .msg.me:after{color:#cfe6ff}
 
-/* GALERİ — kartları büyüttük */
-.wrap{background:#fff;border-radius:22px;padding:10px 10px 8px;box-shadow:var(--shadow)}
-.grid{display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));}
-.card{position:relative;overflow:hidden;border-radius:16px;background:#e6edf5;aspect-ratio:1/1;border:1px solid rgba(0,0,0,.05);
-  box-shadow:0 1px 6px rgba(0,0,0,.05)}
-.card.tall{grid-row:span 2; aspect-ratio:3/4;} /* üst iki görsel daha “uzun” */
+/* GALERİ — kenardan kenara + büyük kartlar */
+.wrap{
+  background:#fff;
+  border-radius:22px;
+  padding:12px;
+  box-shadow:var(--shadow);
+  /* kenardan kenara genişletelim */
+  margin-left:calc(-1 * var(--gutter));
+  margin-right:calc(-1 * var(--gutter));
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px; /* daha az boşluk = daha büyük kart */
+}
+.card{
+  position:relative;overflow:hidden;border-radius:18px;background:#e6edf5;aspect-ratio:1/1;
+  border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 6px rgba(0,0,0,.06)
+}
+.card.tall{aspect-ratio:4/5;}           /* üst sıra dikey ve belirgin büyük */
 .card img{width:100%;height:100%;object-fit:cover;display:block}
 .badge{position:absolute;left:8px;bottom:8px;height:22px;min-width:34px;padding:0 8px;display:grid;place-items:center;border-radius:999px;font-weight:800;font-size:12px;background:#fff;color:#0b6bff;border:1px solid #d9e6ff;box-shadow:0 2px 6px rgba(0,0,0,.12)}
 .stamp{position:absolute;right:8px;bottom:8px;font-size:12px;color:#fff;font-weight:700;background:rgba(0,0,0,.45);padding:2px 6px;border-radius:6px}
@@ -66,15 +84,13 @@ html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,va
 .more span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
 
 /* alt giriş */
-.inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);
-  background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
-.input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);
-  border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 24px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.6)}
+.inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
+.input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 24px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.6)}
 .input input{flex:1;border:0;outline:0;background:transparent;font-size:16px;color:#1a2430}
 .ibtn{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#eef3f8}
 .ibtn.blue{background:linear-gradient(180deg,#e7f1ff,#d6e9ff);color:#0b6dff}
 
-/* masaüstünde ortaya al */
+/* desktop vitrin */
 @media (min-width:640px){
   .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18);background:linear-gradient(180deg,#e8eefb,#f7efe6)}
 }
@@ -82,7 +98,7 @@ html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,va
 </head>
 <body>
 <div class="phone">
-  <!-- durum çubuğu -->
+  <!-- durum -->
   <div class="status">
     <div class="clock">17:23</div>
     <div class="sb" aria-hidden="true">
@@ -109,7 +125,6 @@ html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,va
   <!-- thread -->
   <main class="thread">
     <div class="vbubble">
-      <div class="chip">🎙️</div>
       <div class="play">▶</div>
       <div class="wave"></div>
     </div>
@@ -153,27 +168,26 @@ html,body{margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,va
   </footer>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici">
-  <button class="close" aria-label="Kapat">✕</button>
-  <img src="" alt="">
+<!-- lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici" style="display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);position:fixed;inset:0;z-index:100">
+  <button class="close" aria-label="Kapat" style="position:fixed;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:20px;border:1px solid rgba(255,255,255,.25)">✕</button>
+  <img src="" alt="" style="max-width:100vw;max-height:100vh;object-fit:contain">
 </div>
 
 <script>
-// SW
 if('serviceWorker' in navigator){ addEventListener('load',()=>navigator.serviceWorker.register('sw.js')); }
 
-// Lightbox
-const lb=document.getElementById('lightbox'), img=lb.querySelector('img'), closeBtn=lb.querySelector('.close');
+// lightbox
+const lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img'), closeBtn=lb.querySelector('.close');
 const thumbs=[...document.querySelectorAll('.card img')]; let i=0;
-function openAt(k){ i=k; const el=thumbs[i]; img.src=el.dataset.hd||el.src; lb.classList.add('show'); }
-function closeLb(){ lb.classList.remove('show'); }
+function openAt(k){ i=k; const el=thumbs[i]; lbImg.src=el.dataset.hd||el.src; lb.style.display='flex'; }
+function closeLb(){ lb.style.display='none'; }
 thumbs.forEach((t,idx)=>t.addEventListener('click',()=>openAt(idx)));
-closeBtn.addEventListener('click',closeLb); lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+closeBtn.addEventListener('click',closeLb); lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
 let sx=null; lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
 lb.addEventListener('touchmove',e=>{ if(sx===null)return; const dx=e.touches[0].clientX-sx;
   if(Math.abs(dx)>60){ i=(i+(dx<0?1:-1)+thumbs.length)%thumbs.length; openAt(i); sx=null; }},{passive:true});
-addEventListener('keydown',e=>{ if(!lb.classList.contains('show'))return;
+addEventListener('keydown',e=>{ if(lb.style.display!=='flex')return;
   if(e.key==='Escape')closeLb(); if(e.key==='ArrowRight')openAt((i+1)%thumbs.length); if(e.key==='ArrowLeft')openAt((i-1+thumbs.length)%thumbs.length);});
 </script>
 </body>
