@@ -11,78 +11,111 @@
 <link rel="apple-touch-icon" href="assets/icon-192.png">
 <style>
 :root{
-  --bg:#efe6df; --bg-2:#f7eee6; --paper:#fff; --bubble:#f2f9ff;
-  --ink:#1f2530; --blue-1:#25a0ff; --blue-2:#0b5cff;
-  --me-1:#3aa8ff; --me-2:#0b77ff;
-  --shadow:0 2px 14px rgba(0,0,0,.08);
+  --bg:#efe6df; --bg-2:#f7eee6; --paper:#fff;
+  --ink:#1f2530; --muted:#7b8a98;
+  --blue-1:#2aa0ff; --blue-2:#0b5cff;      /* başlık gradyanı */
+  --me-1:#3aa8ff; --me-2:#0b77ff;          /* mavi mesaj */
   --gutter:clamp(14px,3.6vw,20px);
+  --shadow:0 2px 14px rgba(0,0,0,.08);
 }
 *{box-sizing:border-box}
 html,body{
-  margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,var(--bg-2) 100%);
-  color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  margin:0;
+  background:linear-gradient(180deg,#dfefff 0%, var(--bg) 10%, var(--bg-2) 100%);
+  color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
   -webkit-font-smoothing:antialiased;
 }
 .phone{max-width:480px;margin:0 auto}
 
-/* durum + başlık */
-.status{height:30px;padding:6px var(--gutter) 0;color:#fff;background:linear-gradient(180deg,#50b6ff 0%,#0b6dff 92%);display:flex;align-items:center}
+/* durum çubuğu + başlık (aynı kalsın) */
+.status{height:30px;padding:6px var(--gutter) 0;color:#fff;
+  background:linear-gradient(180deg,#50b6ff 0%,#0b6dff 92%);display:flex;align-items:center}
 .clock{font-weight:700;text-shadow:0 1px 0 rgba(0,0,0,.2)}
 .sb{margin-left:auto;display:flex;gap:10px;opacity:.95}
 .sb svg{width:18px;height:18px}
-.topbar{background:linear-gradient(180deg,var(--blue-1),var(--blue-2));color:#fff;padding:10px var(--gutter) 12px;position:sticky;top:0;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.18);border-bottom-left-radius:18px;border-bottom-right-radius:18px}
+.topbar{background:linear-gradient(180deg,var(--blue-1),var(--blue-2));color:#fff;
+  padding:10px var(--gutter) 12px;position:sticky;top:0;z-index:10;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);border-bottom-left-radius:18px;border-bottom-right-radius:18px}
 .toprow{display:flex;align-items:center;gap:12px}
-.back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
+.back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
 .back svg{width:18px;height:18px;color:#fff}
-.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.55);background:#fff url('assets/photo6.jpg') center/cover no-repeat}
+.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex:0 0 auto;
+  border:2px solid rgba(255,255,255,.55);background:#fff url('assets/photo6.jpg') center/cover no-repeat}
 .title{font-size:18px;font-weight:800;letter-spacing:.2px}
 .actions{margin-left:auto;display:flex;gap:12px}
-.actions .btn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
+.actions .btn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
 .actions svg{width:18px;height:18px;color:#fff}
 
 /* thread */
-.thread{padding:14px var(--gutter) 88px;display:flex;flex-direction:column;gap:14px}
+.thread{padding:14px var(--gutter) 96px;display:flex;flex-direction:column;gap:14px}
 
 /* ses balonu (mikrofon yok) */
-.vbubble{align-self:flex-start;max-width:96%;background:linear-gradient(180deg,#f0fbff,#dff1ff);
-  border-radius:18px;border-top-left-radius:8px;padding:10px;box-shadow:var(--shadow);
-  display:flex;align-items:center;gap:10px}
-.vbubble .play{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#43b3ff,#0b77ff);color:#fff;font-weight:800}
-.wave{flex:1;height:36px;border-radius:16px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative}
+.vbubble{align-self:flex-start;max-width:96%;
+  background:linear-gradient(180deg,#f0fbff,#dff1ff);
+  border-radius:18px;border-top-left-radius:8px;padding:10px;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:10px}
+.vbubble .play{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(180deg,#43b3ff,#0b77ff);color:#fff;font-weight:800}
+.wave{flex:1;height:36px;border-radius:16px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative;overflow:hidden}
 .wave:after{content:"09:12";position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#5b738e;font-size:12px;font-weight:600}
 
-/* mesajlar */
-.msg{max-width:88%;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#f7fdff,#e8f4ff);box-shadow:var(--shadow);position:relative;font-size:16px}
+/* metin balonları */
+.msg{max-width:88%;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#f7fdff,#e8f4ff);
+  box-shadow:var(--shadow);position:relative;font-size:16px}
 .msg:after{content:attr(data-time);position:absolute;right:12px;bottom:-18px;color:#8192a5;font-size:12px}
 .msg.me{align-self:flex-end;color:#fff;background:linear-gradient(180deg,var(--me-1),var(--me-2));border-bottom-right-radius:8px}
 .msg.me:after{color:#cfe6ff}
 
-/* GALERİ — 2×2 kare, büyük, etiketler köşelerde */
-.wrap{
-  background:#fff;border-radius:22px;padding:12px;box-shadow:var(--shadow);
-  margin-left:calc(-1 * var(--gutter)); margin-right:calc(-1 * var(--gutter)); /* kenardan kenara */
+/* === GALERİ — referansla birebir === */
+.album{
+  /* balon içi beyaz, dışı çok hafif mavi çerçeveli */
+  background:linear-gradient(180deg,#ffffff,#fcfdff);
+  border-radius:26px;
+  padding:12px;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+  border:1.5px solid #dfeafb;             /* açık mavi kenar */
+  margin-left:calc(-1 * var(--gutter));    /* kenardan kenara */
+  margin-right:calc(-1 * var(--gutter));
 }
-.grid{
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;
+.album .grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;                                /* referans boşluğu */
 }
-.card{
-  position:relative; overflow:hidden; border-radius:16px; background:#e6edf5;
-  aspect-ratio:1/1; border:1px solid rgba(0,0,0,.05); box-shadow:0 1px 6px rgba(0,0,0,.06);
+.tile{
+  position:relative; overflow:hidden; aspect-ratio:1/1;
+  border-radius:18px;
+  box-shadow:0 2px 12px rgba(0,0,0,.10);
+  background:#e6edf5;
 }
-.card img{width:100%;height:100%;object-fit:cover;display:block}
-.hd{
-  position:absolute; left:8px; bottom:8px; height:18px; min-width:28px; padding:0 6px;
-  display:grid; place-items:center; border-radius:999px; font-size:10px; font-weight:800;
-  background:#fff; color:#0b6bff; border:1px solid #e2e9ff; box-shadow:0 1px 3px rgba(0,0,0,.12);
+/* içe beyaz kontur efekti */
+.tile::after{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.85);
+  pointer-events:none;
 }
-.time{
-  position:absolute; right:8px; bottom:8px; font-size:12px; color:#fff; font-weight:700;
-  text-shadow:0 1px 6px rgba(0,0,0,.35);
-}
-.more::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(8px)}
-.more span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* alt giriş */
+/* alt etiketler */
+.tile .shade{position:absolute;left:0;right:0;bottom:0;height:46px;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 90%);}
+.badge{position:absolute;left:8px;bottom:8px;display:inline-grid;place-items:center;
+  height:18px;min-width:28px;padding:0 6px;border-radius:999px;font-size:10px;font-weight:800;
+  background:#fff;color:#0b6bff;border:1px solid #e2e9ff;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.time{position:absolute;right:8px;bottom:8px;color:#fff;font-weight:700;font-size:12px;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+
+.tile.more img{filter:blur(3px) saturate(.9); transform:scale(1.04)}
+.tile.more .shade{background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.40))}
+.tile.more .moretxt{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+
+/* büyük tek foto blok */
+.big{border-radius:18px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.12);border:1px solid #e9eef7}
+.big img{width:100%;height:auto;display:block}
+
+/* alt giriş çubuğu */
 .inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);
   background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
 .input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);
@@ -91,7 +124,7 @@ html,body{
 .ibtn{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#eef3f8}
 .ibtn.blue{background:linear-gradient(180deg,#e7f1ff,#d6e9ff);color:#0b6dff}
 
-/* desktop vitrin */
+/* masaüstü vitrin */
 @media (min-width:640px){
   .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18);background:linear-gradient(180deg,#e8eefb,#f7efe6)}
 }
@@ -99,7 +132,7 @@ html,body{
 </head>
 <body>
 <div class="phone">
-  <!-- durum -->
+  <!-- Durum -->
   <div class="status">
     <div class="clock">17:23</div>
     <div class="sb" aria-hidden="true">
@@ -109,7 +142,7 @@ html,body{
     </div>
   </div>
 
-  <!-- başlık -->
+  <!-- Başlık -->
   <header class="topbar">
     <div class="toprow">
       <button class="back" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -123,7 +156,7 @@ html,body{
     </div>
   </header>
 
-  <!-- thread -->
+  <!-- Mesajlar -->
   <main class="thread">
     <div class="vbubble">
       <div class="play">▶</div>
@@ -133,34 +166,45 @@ html,body{
     <div class="msg" data-time="09:35"><strong>Kaç gibi burada olursunuz, Güneş Hanım?</strong></div>
     <div class="msg me" data-time="09:52 ✓✓">Öğleden sonra varmış olurum.</div>
 
-    <!-- 2×2 kare galeri -->
-    <section class="wrap">
+    <!-- === 2×2 kare galeri (referansla aynı) === -->
+    <section class="album">
       <div class="grid">
-        <figure class="card">
+        <figure class="tile">
           <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
-          <div class="hd">HD</div><div class="time">12:52</div>
+          <div class="shade"></div>
+          <div class="badge">HD</div>
+          <div class="time">12:52</div>
         </figure>
-        <figure class="card">
+
+        <figure class="tile">
           <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
-          <div class="hd">HD</div><div class="time">12:52</div>
+          <div class="shade"></div>
+          <div class="badge">HD</div>
+          <div class="time">12:52</div>
         </figure>
-        <figure class="card">
+
+        <figure class="tile">
           <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
-          <div class="hd">HD</div><div class="time">12:52</div>
+          <div class="shade"></div>
+          <div class="badge">HD</div>
+          <div class="time">12:52</div>
         </figure>
-        <figure class="card more">
+
+        <figure class="tile more">
           <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
-          <span>+5</span>
+          <div class="shade"></div>
+          <div class="moretxt">+5</div>
         </figure>
       </div>
     </section>
 
-    <figure class="card" style="border-radius:18px;overflow:hidden;aspect-ratio:auto">
+    <!-- büyük tek görsel -->
+    <figure class="big">
       <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
     </figure>
   </main>
 
-  <!-- alt giriş -->
+  <!-- Alt giriş -->
   <footer class="inputbar">
     <div class="input">
       <div class="ibtn">😊</div>
@@ -171,28 +215,42 @@ html,body{
   </footer>
 </div>
 
-<!-- lightbox -->
-<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici" style="display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);position:fixed;inset:0;z-index:100">
-  <button class="close" aria-label="Kapat" style="position:fixed;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:20px;border:1px solid rgba(255,255,255,.25)">✕</button>
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici"
+     style="display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);position:fixed;inset:0;z-index:100">
+  <button class="close" aria-label="Kapat"
+          style="position:fixed;top:14px;right:14px;width:40px;height:40px;border-radius:50%;
+                 background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:20px;
+                 border:1px solid rgba(255,255,255,.25)">✕</button>
   <img src="" alt="" style="max-width:100vw;max-height:100vh;object-fit:contain">
 </div>
 
 <script>
-// SW
+/* SW */
 if('serviceWorker' in navigator){ addEventListener('load',()=>navigator.serviceWorker.register('sw.js')); }
 
-// Lightbox
+/* Lightbox */
 const lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img'), closeBtn=lb.querySelector('.close');
-const thumbs=[...document.querySelectorAll('.card:not(.more) img')]; let i=0;
+const thumbs=[...document.querySelectorAll('.tile:not(.more) img')]; let i=0;
 function openAt(k){ i=k; const el=thumbs[i]; lbImg.src=el.dataset.hd||el.src; lb.style.display='flex'; }
 function closeLb(){ lb.style.display='none'; }
 thumbs.forEach((t,idx)=>t.addEventListener('click',()=>openAt(idx)));
 closeBtn.addEventListener('click',closeLb); lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
-let sx=null; lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
-lb.addEventListener('touchmove',e=>{ if(sx===null)return; const dx=e.touches[0].clientX-sx;
-  if(Math.abs(dx)>60){ i=(i+(dx<0?1:-1)+thumbs.length)%thumbs.length; openAt(i); sx=null; }},{passive:true});
-addEventListener('keydown',e=>{ if(lb.style.display!=='flex')return;
-  if(e.key==='Escape')closeLb(); if(e.key==='ArrowRight')openAt((i+1)%thumbs.length); if(e.key==='ArrowLeft')openAt((i-1+thumbs.length)%thumbs.length);});
+
+/* swipe + klavye */
+let sx=null;
+lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+lb.addEventListener('touchmove',e=>{
+  if(sx===null)return;
+  const dx=e.touches[0].clientX-sx;
+  if(Math.abs(dx)>60){ i=(i+(dx<0?1:-1)+thumbs.length)%thumbs.length; openAt(i); sx=null; }
+},{passive:true});
+addEventListener('keydown',e=>{
+  if(lb.style.display!=='flex')return;
+  if(e.key==='Escape')closeLb();
+  if(e.key==='ArrowRight')openAt((i+1)%thumbs.length);
+  if(e.key==='ArrowLeft')openAt((i-1+thumbs.length)%thumbs.length);
+});
 </script>
 </body>
 </html>
