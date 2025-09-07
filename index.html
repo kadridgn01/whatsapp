@@ -4,6 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Müdüre Hanım Rize — Sohbet</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Müdüre Hanım Rize">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
 :root{
   /* buraya avatar görselini koy */
@@ -103,6 +108,39 @@ body{
 @media (min-width:640px){
   .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18)}
 }
+/* === CHAT GÖRÜNÜMÜ — foto kartları solda, sağda boşluk === */
+.photo-card{
+  /* önceki genişliği/yayılmayı iptal et */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  /* solda hizala, sağda boşluk bırak */
+  align-self: flex-start !important;
+  max-width: 86% !important;      /* sağda ~%14 boşluk görünür */
+  padding: 10px !important;       /* kart içi; 8–12 arası oynatabilirsin */
+  border-radius: 22px !important;
+  border: 2px solid var(--sheet-border) !important;
+  box-shadow: var(--shadow-1) !important;
+}
+
+/* istersen bu boşluğu arttır/azalt:
+   86% -> 80% yaparsan sağ boşluk daha da büyür */
+
+/* === AVATAR — her yerde kusursuz daire === */
+.app .avatar{
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;       /* img olduğu için */
+  display: block !important;
+  border: 2px solid rgba(255,255,255,.6) !important;
+  background: none !important;         /* önceki background’ı iptal */
+}
+
+/* (opsiyonel) metin balonları da soldan gelsin dersen: */
+.msg{ align-self: flex-start; }
+.msg.me{ align-self: flex-end; } /* giden mavi yine sağda kalsın */
+
 </style>
 </head>
 <body>
@@ -123,7 +161,7 @@ body{
       <button class="back" aria-label="Geri">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="avatar"></div>
+    <img class="avatar" src="assets/avatar.jpg" alt="Profil">
       <div class="title">Müdüre Hanım Rize</div>
       <div class="actions">
         <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
