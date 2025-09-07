@@ -546,6 +546,57 @@ body{
   -webkit-user-drag: none;
   pointer-events: none; /* tıklama butonda kalsın */
 }
+/* === SABİT APP BAR & BOŞLUK === */
+:root{ --appbar-h: 56px; }                 /* 54–60 arası oynatılabilir */
+.status{ display:none !important; }        /* sahte status bar kullanmıyoruz */
+
+.topcoat{
+  position:fixed; top:0; left:0; right:0;
+  height: calc(env(safe-area-inset-top) + var(--appbar-h));
+  background: linear-gradient(180deg, var(--blue1), var(--blue2));
+  z-index: 0; pointer-events: none;
+}
+
+.app{
+  position: fixed !important;
+  top: env(safe-area-inset-top) !important;
+  left: 0; right: 0;
+  height: var(--appbar-h) !important;
+  display:flex !important; align-items:center !important;
+  padding: 0 var(--gutter) !important;
+  background: linear-gradient(180deg, var(--blue1), var(--blue2)) !important;
+  z-index: 2 !important;
+}
+
+.app-spacer{
+  height: calc(env(safe-area-inset-top) + var(--appbar-h)) !important;
+}
+
+/* başlık/ikonlar tek satır */
+.app-inner{ width:100%; gap:8px !important; }
+.back{ width:32px !important; height:32px !important; }
+.app .avatar{
+  width:32px !important; height:32px !important;
+  border-radius:50% !important; object-fit:cover !important;
+  border:2px solid rgba(255,255,255,.6) !important;
+}
+.title{
+  flex:1 1 auto !important; min-width:0 !important;
+  white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
+  font-size:clamp(16px,4.6vw,20px) !important; font-weight:800 !important;
+}
+.actions{ gap:8px !important; }
+.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
+
+@media (max-width:360px){
+  :root{ --appbar-h: 52px; }
+  .actions .btn{ width:28px !important; height:28px !important; }
+}
+
+/* ÇAKIŞMAYI ÖNLEME: varsa eski hero/topbar varyantlarını kapat */
+.hero{ display:none !important; height:0 !important; }
+/* Eski 'sticky' app kurallarını etkisiz bırakmak için: */
+.app{ position: fixed !important; }
 
 </style>
 </head>
@@ -556,23 +607,48 @@ body{
 <div class="topcoat" aria-hidden="true"></div>
 
   <!-- APP BAR -->
-  <div class="app">
-    <div class="app-inner">
-      <button class="back" aria-label="Geri">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-   <img class="avatar"
-     src="assets/photo6.jpg"
-     alt="Profil"
-     onerror="this.onerror=null; this.src='assets/photo6.jpg';">
-      <div class="title">Müdire Hanım Rize</div>
-      <div class="actions">
-        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
-        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="white"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></div>
+ <!-- sabit mavi üst bant -->
+<div class="topcoat" aria-hidden="true"></div>
+
+<!-- APP BAR (TEK ADET) -->
+<div class="app">
+  <div class="app-inner">
+    <button class="back" aria-label="Geri">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+
+    <img class="avatar"
+         src="assets/photo6.jpg"
+         alt="Profil"
+         onerror="this.onerror=null;this.src='assets/photo6.jpg';">
+
+    <div class="title">Müdire Hanım Rize</div>
+
+    <div class="actions">
+      <div class="btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/>
+          <path d="M15 10l6-3v10l-6-3v-4z" fill="white"/>
+        </svg>
+      </div>
+      <div class="btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="white">
+          <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
+        </svg>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Bar kadar boşluk: içerik barın ALTINDAN başlasın -->
+<div class="app-spacer"></div>
+
 
   <!-- THREAD -->
   <main class="thread">
