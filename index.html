@@ -13,8 +13,8 @@
 :root{
   --bg:#efe6df; --bg-2:#f7eee6; --paper:#fff;
   --ink:#1f2530; --muted:#7b8a98;
-  --blue-1:#2aa0ff; --blue-2:#0b5cff;      /* başlık gradyanı */
-  --me-1:#3aa8ff; --me-2:#0b77ff;          /* mavi mesaj */
+  --blue-1:#2aa0ff; --blue-2:#0b5cff;
+  --me-1:#3aa8ff; --me-2:#0b77ff;
   --gutter:clamp(14px,3.6vw,20px);
   --shadow-soft:0 8px 24px rgba(0,0,0,.10);
   --shadow-card:0 12px 28px rgba(0,0,0,.12);
@@ -47,7 +47,7 @@ html,body{
 /* thread */
 .thread{padding:14px var(--gutter) 96px;display:flex;flex-direction:column;gap:14px}
 
-/* sesli mesaj — referansla aynı kompozisyon */
+/* sesli mesaj (referansa yakın) */
 .voice{
   align-self:flex-start; width:100%;
   background:linear-gradient(180deg,#f0fbff,#dff1ff);
@@ -78,41 +78,42 @@ html,body{
 .wave .bar{width:2px;background:#7fb2ff;height:14px;margin:0 2px;border-radius:1px}
 .voice .t{ position:absolute; right:12px; top:50%; transform:translateY(-50%); color:#536e8f; font-size:12px; font-weight:700; }
 
-/* mesajlar */
+/* metin balonları */
 .msg{
   max-width:88%; padding:14px 16px; border-radius:18px;
   background:linear-gradient(180deg,#f7fdff,#e8f4ff);
   box-shadow:var(--shadow-soft); position:relative; font-size:16px;
 }
-.msg .time{ position:absolute; right:12px; bottom:-18px; color:#8192a5; font-size:12px; }
+.msg .time{ position:absolute; right:12px; bottom:-12px; color:#90a0b2; font-size:12px; } /* hizası düzeldi */
 .msg.me{ align-self:flex-end; color:#fff; background:linear-gradient(180deg,var(--me-1),var(--me-2)); border-bottom-right-radius:10px; }
 .msg.me .time{ color:#cfe6ff; }
 
-/* === GALERİ — fotoğraflar daha büyük, kart kompakt === */
+/* === GALERİ — BOŞLUKSUZ 2×2, büyük foto + kompakt kart === */
 .album{
   background:linear-gradient(180deg,#ffffff,#fcfdff);
-  border-radius:10px;
-  padding:1px;                          /* daha küçük kart = daha büyük foto */
+  border-radius:18px;
+  padding:4px;                         /* kart küçüldü -> foto büyüdü */
   box-shadow:var(--shadow-card);
   border:1.5px solid #dfeafb;
   margin-left:calc(-1 * var(--gutter));
   margin-right:calc(-1 * var(--gutter));
 }
-.album .grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:4px;                               /* daha yakın */
-}
-.tile{
+.album.tight .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; } /* boşluk yok */
+
+.album.tight .tile{
   position:relative; overflow:hidden; aspect-ratio:1/1;
-  border-radius:18px; background:#e6edf5;
-  box-shadow:0 2px 12px rgba(0,0,0,.10);
+  border-radius:0; background:#e6edf5; box-shadow:none;
 }
-.tile::after{                           /* iç beyaz hat */
-  content:""; position:absolute; inset:0; border-radius:inherit;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.85); pointer-events:none;
-}
+.album.tight .tile::after{ content:none }    /* iç kontur yok */
+
+.album.tight .tile:nth-child(1){ border-top-left-radius:16px }
+.album.tight .tile:nth-child(2){ border-top-right-radius:16px }
+.album.tight .tile:nth-child(3){ border-bottom-left-radius:16px }
+.album.tight .tile:nth-child(4){ border-bottom-right-radius:16px }
+
 .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* alt etiketler */
 .shade{ position:absolute; left:0; right:0; bottom:0; height:46px;
   background:linear-gradient(180deg,rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 90%); }
 .badge{
@@ -123,13 +124,13 @@ html,body{
 .time{
   position:absolute; right:8px; bottom:8px; color:#fff; font-weight:700; font-size:12px; text-shadow:0 2px 8px rgba(0,0,0,.45);
 }
-.tile.more img{ filter:blur(3px) saturate(.9); transform:scale(1.04); }
-.tile.more .shade{ background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.40)); }
-.tile.more .moretxt{ position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-weight:800; font-size:26px; letter-spacing:.5px; text-shadow:0 2px 8px rgba(0,0,0,.4); }
 
-/* Tek büyük görsel — kare ve kart içinde */
+/* Tek büyük görsel — kare ve kart içinde (tight ama tek görselde köşeler yuvarlak) */
 .album.square{ padding:4px; }
-.album.square .tile{ aspect-ratio:1/1; }
+.album.square.tight .tile{ border-radius:16px !important; box-shadow:none; }
+.album.square .grid{ display:block }
+.album.square .tile{ aspect-ratio:1/1; position:relative; overflow:hidden; }
+.album.square .tile::after{ content:none }     /* temiz kare görünüm */
 
 /* alt giriş */
 .inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
@@ -142,29 +143,6 @@ html,body{
 @media (min-width:640px){
   .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18);background:linear-gradient(180deg,#e8eefb,#f7efe6)}
 }
-/* === Boşluksuz (no-gap) galeri varyantı === */
-.album.tight{
-  padding:8px;                                      /* 6–10 arası oynatabilirsin */
-  margin-left:  calc(-1 * var(--gutter));
-  margin-right: calc(-1 * var(--gutter));
-}
-.album.tight .grid{ gap:0 }                          /* fotoğraflar arası boşluk: 0 */
-
-.album.tight .tile{
-  border-radius:0;                                   /* iç köşeleri köşeli yap */
-  box-shadow:none;                                   /* bitişik gölge çizgisi olmasın */
-}
-.album.tight .tile::after{ content:none }            /* iç beyaz konturu kapat */
-
-.album.tight .tile:nth-child(1){ border-top-left-radius:16px }
-.album.tight .tile:nth-child(2){ border-top-right-radius:16px }
-.album.tight .tile:nth-child(3){ border-bottom-left-radius:16px }
-.album.tight .tile:nth-child(4){ border-bottom-right-radius:16px }
-
-/* etiketler olduğu yerde kalsın */
-.badge{ left:8px; bottom:8px; }
-.time { right:8px; bottom:8px; }
-
 </style>
 </head>
 <body>
@@ -202,7 +180,6 @@ html,body{
       <div class="play">▶</div>
       <div class="wave">
         <div class="dot"></div>
-        <!-- görsel amaçlı basit çubuklar -->
         <div class="bar" style="height:12px"></div>
         <div class="bar" style="height:16px"></div>
         <div class="bar" style="height:10px"></div>
@@ -228,37 +205,38 @@ html,body{
       <span class="time">09:52 ✓✓</span>
     </div>
 
-    <!-- 2×2 kare galeri — boşluk yok -->
-<section class="album tight">
-  <div class="grid">
-    <figure class="tile">
-      <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
-      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-    </figure>
+    <!-- 2×2 kare galeri — boşluk YOK -->
+    <section class="album tight">
+      <div class="grid">
+        <figure class="tile">
+          <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
+          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+        </figure>
 
-    <figure class="tile">
-      <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
-      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-    </figure>
+        <figure class="tile">
+          <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
+          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+        </figure>
 
-    <figure class="tile">
-      <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
-      <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-    </figure>
+        <figure class="tile">
+          <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
+          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+        </figure>
 
-    <figure class="tile more">
-      <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
-      <div class="shade"></div><div class="moretxt">+5</div>
-    </figure>
-  </div>
-</section>
+        <figure class="tile more">
+          <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
+          <div class="shade"></div><div class="moretxt">+5</div>
+        </figure>
+      </div>
+    </section>
 
-    <!-- kare büyük görsel kart içinde -->
-    <section class="album square">
-      <figure class="tile">
-        <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
-        <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
-      </figure>
+    <!-- kare büyük görsel kart içinde (etiketsiz, sade) -->
+    <section class="album square tight">
+      <div class="grid">
+        <figure class="tile">
+          <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
+        </figure>
+      </div>
     </section>
   </main>
 
