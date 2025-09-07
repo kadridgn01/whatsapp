@@ -1,153 +1,116 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Müdüre Hanım Rize — Sohbet</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b74ff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0B6DFF" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="apple-touch-icon" href="assets/icon-192.png" />
 <style>
 :root{
-  --bg:#efe6df; --bg-2:#f7eee6; --paper:#fff;
-  --ink:#1f2530; --muted:#7b8a98;
-  --blue-1:#2aa0ff; --blue-2:#0b5cff;
-  --me-1:#3aa8ff; --me-2:#0b77ff;
+  --bg:#efe5dc; --bg2:#f7eee6;
+  --ink:#1e2630; --muted:#7a8a99;
+  --blue1:#36a5ff; --blue2:#0b6dff;            /* başlık gradyanı */
+  --me1:#3aa8ff; --me2:#0b77ff;                /* giden balon */
+  --sheet:#ffffff; --sheet-border:#cfe2ff;     /* foto kartı */
   --gutter:clamp(14px,3.6vw,20px);
-  --shadow-soft:0 8px 24px rgba(0,0,0,.10);
-  --shadow-card:0 12px 28px rgba(0,0,0,.12);
+  --radius-card:20px;
+  --shadow-1:0 10px 30px rgba(0,0,0,.12);
+  --shadow-2:0 3px 10px rgba(0,0,0,.08);
 }
-*{box-sizing:border-box}
-html,body{
-  margin:0;
-  background:linear-gradient(180deg,#dfefff 0%, var(--bg) 10%, var(--bg-2) 100%);
+
+/* reset */
+*{box-sizing:border-box} html,body{margin:0}
+body{
+  background:linear-gradient(180deg,#dfefff 0%,var(--bg) 8%,var(--bg2) 100%);
   color:var(--ink);
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
   -webkit-font-smoothing:antialiased;
 }
 .phone{max-width:480px;margin:0 auto}
 
-/* durum + başlık */
-.status{height:30px;padding:6px var(--gutter) 0;color:#fff;background:linear-gradient(180deg,#50b6ff 0%,#0b6dff 92%);display:flex;align-items:center}
-.clock{font-weight:700;text-shadow:0 1px 0 rgba(0,0,0,.2)}
+/* STATUS */
+.status{height:32px;padding:6px var(--gutter) 0;color:#fff;
+  background:linear-gradient(180deg,#52b8ff 0%,#0b6dff 100%);
+  display:flex;align-items:center}
+.clock{font-weight:800;text-shadow:0 1px 0 rgba(0,0,0,.2)}
 .sb{margin-left:auto;display:flex;gap:10px;opacity:.95}
 .sb svg{width:18px;height:18px}
-.topbar{background:linear-gradient(180deg,var(--blue-1),var(--blue-2));color:#fff;padding:10px var(--gutter) 12px;position:sticky;top:0;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.18);border-bottom-left-radius:18px;border-bottom-right-radius:18px}
-.toprow{display:flex;align-items:center;gap:12px}
-.back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
-.back svg{width:18px;height:18px;color:#fff}
-.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.55);background:#fff url('assets/photo6.jpg') center/cover no-repeat}
-.title{font-size:18px;font-weight:800;letter-spacing:.2px}
+
+/* APP BAR */
+.app{position:sticky;top:0;z-index:10;padding:12px var(--gutter);
+  background:linear-gradient(180deg,var(--blue1),var(--blue2));
+  color:#fff;box-shadow:0 18px 36px rgba(0,0,0,.18)}
+.app-inner{display:flex;align-items:center;gap:12px}
+.app .back{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.12))}
+.app .back svg{width:18px;height:18px}
+.app .avatar{width:36px;height:36px;border-radius:50%;background:#fff url('assets/photo6.jpg') center/cover no-repeat;border:2px solid rgba(255,255,255,.6)}
+.title{font-size:20px;font-weight:900;letter-spacing:.2px}
 .actions{margin-left:auto;display:flex;gap:12px}
-.actions .btn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.14))}
-.actions svg{width:18px;height:18px;color:#fff}
+.actions .btn{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.12))}
 
-/* thread */
-.thread{padding:14px var(--gutter) 96px;display:flex;flex-direction:column;gap:14px}
+/* THREAD */
+.thread{padding:14px var(--gutter) 120px;display:flex;flex-direction:column;gap:16px}
 
-/* sesli mesaj (referansa yakın) */
-.voice{
-  align-self:flex-start; width:100%;
-  background:linear-gradient(180deg,#f0fbff,#dff1ff);
-  border-radius:22px; border-top-left-radius:10px;
-  padding:10px 12px; box-shadow:var(--shadow-soft);
-  display:flex; align-items:center; gap:10px; position:relative;
-}
-.voice .avatar{
-  width:40px;height:40px;border-radius:50%;
-  background:#fff url('assets/photo6.jpg') center/cover no-repeat;
-  border:2px solid rgba(255,255,255,.75); box-shadow:0 2px 6px rgba(0,0,0,.15); position:relative;
-}
-.voice .mic{
-  position:absolute; left:42px; top:28px; width:18px;height:18px;border-radius:50%;
-  background:linear-gradient(180deg,#49a7ff,#0b74ff); color:#fff; display:grid; place-items:center; font-size:11px; font-weight:900;
-  box-shadow:0 3px 8px rgba(11,116,255,.35); border:1px solid rgba(255,255,255,.6);
-}
-.voice .play{
-  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
-  background:linear-gradient(180deg,#43b3ff,#0b77ff); color:#fff; font-weight:800;
-  box-shadow:0 6px 18px rgba(11,119,255,.35);
-}
-.wave{
-  flex:1; height:38px; border-radius:18px; background:linear-gradient(180deg,#eaf3ff,#d3e7ff);
-  position:relative; overflow:hidden; display:flex; align-items:center; padding:0 12px;
-}
-.wave .dot{width:8px;height:8px;border-radius:50%;background:#49a7ff;margin-right:8px;opacity:.9}
-.wave .bar{width:2px;background:#7fb2ff;height:14px;margin:0 2px;border-radius:1px}
-.voice .t{ position:absolute; right:12px; top:50%; transform:translateY(-50%); color:#536e8f; font-size:12px; font-weight:700; }
+/* VOICE BUBBLE */
+.voice{align-self:flex-start;width:100%;background:linear-gradient(180deg,#f0fbff,#dff1ff);
+  border-radius:22px;border-top-left-radius:10px;padding:10px 12px;box-shadow:var(--shadow-2);
+  display:flex;align-items:center;gap:10px;position:relative}
+.voice .ava{width:40px;height:40px;border-radius:50%;background:#fff url('assets/photo6.jpg') center/cover no-repeat;border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,0,0,.15);position:relative}
+.voice .mic{position:absolute;left:43px;top:30px;width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#5bb7ff,#0b74ff);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:900;border:1px solid rgba(255,255,255,.7);box-shadow:0 3px 8px rgba(11,116,255,.35)}
+.play{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#3fb1ff,#0b77ff);color:#fff;font-weight:900;box-shadow:0 10px 22px rgba(11,119,255,.35)}
+.wave{flex:1;height:38px;border-radius:18px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative;overflow:hidden}
+.wave::before{content:"";position:absolute;inset:8px 12px;background:
+  repeating-linear-gradient(90deg,#7fb2ff 0 2px, transparent 2px 6px)}
+.vtime{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#58799a;font-weight:700;font-size:12px}
 
-/* metin balonları */
-.msg{
-  max-width:88%; padding:14px 16px; border-radius:18px;
-  background:linear-gradient(180deg,#f7fdff,#e8f4ff);
-  box-shadow:var(--shadow-soft); position:relative; font-size:16px;
-}
-.msg .time{ position:absolute; right:12px; bottom:-12px; color:#90a0b2; font-size:12px; } /* hizası düzeldi */
-.msg.me{ align-self:flex-end; color:#fff; background:linear-gradient(180deg,var(--me-1),var(--me-2)); border-bottom-right-radius:10px; }
-.msg.me .time{ color:#cfe6ff; }
+/* MESSAGE BUBBLES */
+.msg{max-width:88%;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#f4fbff,#e6f2ff);box-shadow:var(--shadow-2);position:relative}
+.msg .t{position:absolute;right:12px;bottom:-16px;color:#8ea0b6;font-size:12px}
+.msg.me{align-self:flex-end;background:linear-gradient(180deg,var(--me1),var(--me2));color:#fff;border-bottom-right-radius:10px}
+.msg.me .t{color:#cfe6ff}
+.msg .tick{margin-left:6px;opacity:.9}
 
-/* === GALERİ — BOŞLUKSUZ 2×2, büyük foto + kompakt kart === */
-.album{
-  background:linear-gradient(180deg,#ffffff,#fcfdff);
-  border-radius:12px;
-  padding:1px;                         /* kart küçüldü -> foto büyüdü */
-  box-shadow:var(--shadow-card);
-  border:1.5px solid #dfeafb;
-  margin-left:calc(-1 * var(--gutter));
-  margin-right:calc(-1 * var(--gutter));
-}
-.album.tight .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; } /* boşluk yok */
+/* PHOTO ALBUM (exact card) */
+.album{background:var(--sheet);border:1.5px solid var(--sheet-border);border-radius:22px;padding:10px;box-shadow:var(--shadow-1);margin-left:calc(-1*var(--gutter));margin-right:calc(-1*var(--gutter))}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{position:relative;overflow:hidden;border-radius:18px;background:#e6edf5}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{position:absolute;left:8px;bottom:8px;height:18px;min-width:28px;padding:0 6px;border-radius:999px;font-size:10px;font-weight:800;background:#fff;color:#0b6bff;border:1px solid #e6eeff;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.stamp{position:absolute;right:8px;bottom:8px;color:#fff;font-weight:800;font-size:12px;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+.tile.more img{filter:blur(3px) saturate(.9);transform:scale(1.04)}
+.tile.more::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.4))}
+.tile.more .plus{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:900;font-size:28px;letter-spacing:.5px}
 
-.album.tight .tile{
-  position:relative; overflow:hidden; aspect-ratio:1/1;
-  border-radius:0; background:#e6edf5; box-shadow:none;
-}
-.album.tight .tile::after{ content:none }    /* iç kontur yok */
+/* BIG PHOTO CARD */
+.sheet{background:var(--sheet);border:1.5px solid var(--sheet-border);border-radius:22px;padding:10px;box-shadow:var(--shadow-1);margin-left:calc(-1*var(--gutter));margin-right:calc(-1*var(--gutter))}
+.sheet .media{overflow:hidden;border-radius:18px}
+.sheet img{width:100%;height:auto;display:block}
 
-.album.tight .tile:nth-child(1){ border-top-left-radius:16px }
-.album.tight .tile:nth-child(2){ border-top-right-radius:16px }
-.album.tight .tile:nth-child(3){ border-bottom-left-radius:16px }
-.album.tight .tile:nth-child(4){ border-bottom-right-radius:16px }
-
-.tile img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-/* alt etiketler */
-.shade{ position:absolute; left:0; right:0; bottom:0; height:46px;
-  background:linear-gradient(180deg,rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 90%); }
-.badge{
-  position:absolute; left:8px; bottom:8px; height:18px; min-width:28px; padding:0 6px;
-  display:grid; place-items:center; border-radius:999px; font-size:10px; font-weight:800;
-  background:#fff; color:#0b6bff; border:1px solid #e2e9ff; box-shadow:0 1px 3px rgba(0,0,0,.12);
-}
-.time{
-  position:absolute; right:8px; bottom:8px; color:#fff; font-weight:700; font-size:12px; text-shadow:0 2px 8px rgba(0,0,0,.45);
-}
-
-/* Tek büyük görsel — kare ve kart içinde (tight ama tek görselde köşeler yuvarlak) */
-.album.square{ padding:4px; }
-.album.square.tight .tile{ border-radius:16px !important; box-shadow:none; }
-.album.square .grid{ display:block }
-.album.square .tile{ aspect-ratio:1/1; position:relative; overflow:hidden; }
-.album.square .tile::after{ content:none }     /* temiz kare görünüm */
-
-/* alt giriş */
-.inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
-.input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 24px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.6)}
+/* INPUT BAR + FLOAT MIC */
+.inputwrap{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg2) 30%,var(--bg2) 100%);display:flex;gap:14px;align-items:flex-end}
+.input{flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);border:1px solid rgba(0,0,0,.06);box-shadow:0 10px 28px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.7)}
+.input .ib{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#eef3f8}
 .input input{flex:1;border:0;outline:0;background:transparent;font-size:16px;color:#1a2430}
-.ibtn{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#eef3f8}
-.ibtn.blue{background:linear-gradient(180deg,#e7f1ff,#d6e9ff);color:#0b6dff}
+.fmic{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#36a5ff,#0b6dff);box-shadow:0 18px 40px rgba(11,109,255,.35);color:#fff;font-size:26px;border:1px solid rgba(255,255,255,.3)}
 
-/* masaüstü vitrin */
+/* LIGHTBOX */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center}
+#lightbox img{max-width:100vw;max-height:100vh;object-fit:contain}
+#lightbox .close{position:fixed;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:20px;border:1px solid rgba(255,255,255,.25)}
+/* desktop showcase */
 @media (min-width:640px){
-  .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18);background:linear-gradient(180deg,#e8eefb,#f7efe6)}
+  .phone{margin:22px auto;border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.18)}
 }
 </style>
 </head>
 <body>
 <div class="phone">
-  <!-- Durum -->
+  <!-- STATUS -->
   <div class="status">
     <div class="clock">17:23</div>
     <div class="sb" aria-hidden="true">
@@ -157,128 +120,111 @@ html,body{
     </div>
   </div>
 
-  <!-- Başlık -->
-  <header class="topbar">
-    <div class="toprow">
-      <button class="back" aria-label="Geri"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <!-- APP BAR -->
+  <div class="app">
+    <div class="app-inner">
+      <button class="back" aria-label="Geri">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
       <div class="avatar"></div>
       <div class="title">Müdüre Hanım Rize</div>
       <div class="actions">
-        <div class="btn"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
-        <div class="btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="btn"><svg viewBox="0 0 24 24" fill="white"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></div>
+        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="3" stroke="white" stroke-width="2"/><path d="M15 10l6-3v10l-6-3v-4z" fill="white"/></svg></div>
+        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 2l4 3-2 3a16 16 0 007 7l3-2 3 4-2 2c-2 2-11-3-14-6S4 4 6 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="white"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></div>
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- Mesajlar -->
+  <!-- THREAD -->
   <main class="thread">
-    <!-- Sesli mesaj -->
+    <!-- voice -->
     <div class="voice">
-      <div class="avatar"></div>
+      <div class="ava"></div>
       <div class="mic">🎙</div>
       <div class="play">▶</div>
-      <div class="wave">
-        <div class="dot"></div>
-        <div class="bar" style="height:12px"></div>
-        <div class="bar" style="height:16px"></div>
-        <div class="bar" style="height:10px"></div>
-        <div class="bar" style="height:22px"></div>
-        <div class="bar" style="height:8px"></div>
-        <div class="bar" style="height:18px"></div>
-        <div class="bar" style="height:26px"></div>
-        <div class="bar" style="height:12px"></div>
-        <div class="bar" style="height:20px"></div>
-      </div>
-      <div class="t">09:12</div>
+      <div class="wave"></div>
+      <div class="vtime">09:12</div>
     </div>
 
-    <!-- gelen metin -->
+    <!-- incoming -->
     <div class="msg">
       <strong>Kaç gibi burada olursunuz, Güneş Hanım?</strong>
-      <span class="time">09:35</span>
+      <span class="t">09:35</span>
     </div>
 
-    <!-- giden metin -->
+    <!-- outgoing -->
     <div class="msg me">
       Öğleden sonra varmış olurum.
-      <span class="time">09:52 ✓✓</span>
+      <span class="t">09:52 <span class="tick">✓✓</span></span>
     </div>
 
-    <!-- 2×2 kare galeri — boşluk YOK -->
-    <section class="album tight">
+    <!-- photos 2×2 -->
+    <section class="album">
       <div class="grid">
         <figure class="tile">
           <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+          <div class="badge">HD</div><div class="stamp">12:52</div>
         </figure>
-
         <figure class="tile">
           <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+          <div class="badge">HD</div><div class="stamp">12:52</div>
         </figure>
-
         <figure class="tile">
           <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
-          <div class="shade"></div><div class="badge">HD</div><div class="time">12:52</div>
+          <div class="badge">HD</div><div class="stamp">12:52</div>
         </figure>
-
         <figure class="tile more">
           <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
-          <div class="shade"></div><div class="moretxt">+5</div>
+          <div class="plus">+5</div>
         </figure>
       </div>
     </section>
 
-    <!-- kare büyük görsel kart içinde (etiketsiz, sade) -->
-    <section class="album square tight">
-      <div class="grid">
-        <figure class="tile">
-          <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
-        </figure>
+    <!-- big photo -->
+    <section class="sheet">
+      <div class="media">
+        <img src="assets/photo5.jpg" alt="Foto 5" data-hd="assets/photo5.jpg">
       </div>
     </section>
   </main>
 
-  <!-- Alt giriş -->
-  <footer class="inputbar">
+  <!-- INPUT + FLOAT MIC -->
+  <div class="inputwrap">
     <div class="input">
-      <div class="ibtn">😊</div>
-      <input placeholder="Mesaj yazın" aria-label="Mesaj yazın">
-      <div class="ibtn">📎</div>
-      <div class="ibtn blue">📷</div>
+      <div class="ib">😊</div>
+      <input placeholder="Message" aria-label="Mesaj yazın" />
+      <div class="ib">📎</div>
+      <div class="ib">📷</div>
     </div>
-  </footer>
+    <button class="fmic" aria-label="Sesli mesaj">🎤</button>
+  </div>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici"
-     style="display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.88);position:fixed;inset:0;z-index:100">
-  <button id="lbClose" aria-label="Kapat"
-          style="position:fixed;top:14px;right:14px;width:40px;height:40px;border-radius:50%;
-                 background:rgba(255,255,255,.15);color:#fff;font-weight:900;font-size:20px;
-                 border:1px solid rgba(255,255,255,.25)">✕</button>
-  <img id="lbImg" src="" alt="" style="max-width:100vw;max-height:100vh;object-fit:contain">
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf görüntüleyici">
+  <button class="close" aria-label="Kapat">✕</button>
+  <img src="" alt="" />
 </div>
 
 <script>
-if('serviceWorker' in navigator){ addEventListener('load',()=>navigator.serviceWorker.register('sw.js')); }
-
-// Lightbox
 const lb=document.getElementById('lightbox');
-const lbImg=document.getElementById('lbImg');
-const lbClose=document.getElementById('lbClose');
-const thumbs=[...document.querySelectorAll('.tile:not(.more) img')];
-let i=0;
-function openAt(k){ i=k; const el=thumbs[i]; lbImg.src=el.dataset.hd||el.src; lb.style.display='flex'; }
+const lbImg=lb.querySelector('img');
+const closeBtn=lb.querySelector('.close');
+const thumbs=[...document.querySelectorAll('.tile img')];
+
+function openAt(src){ lbImg.src=src; lb.style.display='flex'; }
 function closeLb(){ lb.style.display='none'; }
-thumbs.forEach((t,idx)=>t.addEventListener('click',()=>openAt(idx)));
-lbClose.addEventListener('click',closeLb); lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
+
+thumbs.forEach(t=>t.addEventListener('click',()=>openAt(t.dataset.hd||t.src)));
+closeBtn.addEventListener('click',closeLb);
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
+
 let sx=null; lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
-lb.addEventListener('touchmove',e=>{ if(sx===null)return; const dx=e.touches[0].clientX-sx;
-  if(Math.abs(dx)>60){ i=(i+(dx<0?1:-1)+thumbs.length)%thumbs.length; openAt(i); sx=null; }},{passive:true});
-addEventListener('keydown',e=>{ if(lb.style.display!=='flex')return;
-  if(e.key==='Escape')closeLb(); if(e.key==='ArrowRight')openAt((i+1)%thumbs.length); if(e.key==='ArrowLeft')openAt((i-1+thumbs.length)%thumbs.length);});
+lb.addEventListener('touchmove',e=>{
+  if(sx===null)return; const dx=e.touches[0].clientX-sx;
+  if(Math.abs(dx)>50){ sx=null; /* basit swipe kapatma */ closeLb(); }
+},{passive:true});
 </script>
 </body>
 </html>
