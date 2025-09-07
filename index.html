@@ -19,10 +19,8 @@
 }
 *{box-sizing:border-box}
 html,body{
-  margin:0;
-  background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,var(--bg-2) 100%);
-  color:var(--ink);
-  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  margin:0;background:linear-gradient(180deg,#dfefff 0%,var(--bg) 10%,var(--bg-2) 100%);
+  color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
   -webkit-font-smoothing:antialiased;
 }
 .phone{max-width:480px;margin:0 auto}
@@ -45,10 +43,12 @@ html,body{
 /* thread */
 .thread{padding:14px var(--gutter) 88px;display:flex;flex-direction:column;gap:14px}
 
-/* ses balonu (mikrofon çipi kaldırıldı) */
-.vbubble{align-self:flex-start;max-width:96%;background:linear-gradient(180deg,#f0fbff,#dff1ff);border-radius:18px;border-top-left-radius:8px;padding:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;position:relative}
+/* ses balonu (mikrofon yok) */
+.vbubble{align-self:flex-start;max-width:96%;background:linear-gradient(180deg,#f0fbff,#dff1ff);
+  border-radius:18px;border-top-left-radius:8px;padding:10px;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:10px}
 .vbubble .play{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#43b3ff,#0b77ff);color:#fff;font-weight:800}
-.wave{flex:1;height:36px;border-radius:16px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative;overflow:hidden}
+.wave{flex:1;height:36px;border-radius:16px;background:linear-gradient(180deg,#eaf3ff,#d3e7ff);position:relative}
 .wave:after{content:"09:12";position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#5b738e;font-size:12px;font-weight:600}
 
 /* mesajlar */
@@ -57,35 +57,36 @@ html,body{
 .msg.me{align-self:flex-end;color:#fff;background:linear-gradient(180deg,var(--me-1),var(--me-2));border-bottom-right-radius:8px}
 .msg.me:after{color:#cfe6ff}
 
-/* GALERİ — kenardan kenara + büyük kartlar */
+/* GALERİ — 2×2 kare, büyük, etiketler köşelerde */
 .wrap{
-  background:#fff;
-  border-radius:22px;
-  padding:12px;
-  box-shadow:var(--shadow);
-  /* kenardan kenara genişletelim */
-  margin-left:calc(-1 * var(--gutter));
-  margin-right:calc(-1 * var(--gutter));
+  background:#fff;border-radius:22px;padding:12px;box-shadow:var(--shadow);
+  margin-left:calc(-1 * var(--gutter)); margin-right:calc(-1 * var(--gutter)); /* kenardan kenara */
 }
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px; /* daha az boşluk = daha büyük kart */
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;
 }
 .card{
-  position:relative;overflow:hidden;border-radius:18px;background:#e6edf5;aspect-ratio:1/1;
-  border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 6px rgba(0,0,0,.06)
+  position:relative; overflow:hidden; border-radius:16px; background:#e6edf5;
+  aspect-ratio:1/1; border:1px solid rgba(0,0,0,.05); box-shadow:0 1px 6px rgba(0,0,0,.06);
 }
-.card.tall{aspect-ratio:4/5;}           /* üst sıra dikey ve belirgin büyük */
 .card img{width:100%;height:100%;object-fit:cover;display:block}
-.badge{position:absolute;left:8px;bottom:8px;height:22px;min-width:34px;padding:0 8px;display:grid;place-items:center;border-radius:999px;font-weight:800;font-size:12px;background:#fff;color:#0b6bff;border:1px solid #d9e6ff;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-.stamp{position:absolute;right:8px;bottom:8px;font-size:12px;color:#fff;font-weight:700;background:rgba(0,0,0,.45);padding:2px 6px;border-radius:6px}
+.hd{
+  position:absolute; left:8px; bottom:8px; height:18px; min-width:28px; padding:0 6px;
+  display:grid; place-items:center; border-radius:999px; font-size:10px; font-weight:800;
+  background:#fff; color:#0b6bff; border:1px solid #e2e9ff; box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+.time{
+  position:absolute; right:8px; bottom:8px; font-size:12px; color:#fff; font-weight:700;
+  text-shadow:0 1px 6px rgba(0,0,0,.35);
+}
 .more::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(8px)}
-.more span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.more span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
 
 /* alt giriş */
-.inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
-.input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 24px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.6)}
+.inputbar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(env(safe-area-inset-bottom) + 10px);
+  background:linear-gradient(180deg,rgba(255,255,255,0) 0%,var(--bg-2) 30%,var(--bg-2) 100%)}
+.input{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:28px;background:linear-gradient(180deg,#fff,#f5f7fb);
+  border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 24px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.6)}
 .input input{flex:1;border:0;outline:0;background:transparent;font-size:16px;color:#1a2430}
 .ibtn{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:#eef3f8}
 .ibtn.blue{background:linear-gradient(180deg,#e7f1ff,#d6e9ff);color:#0b6dff}
@@ -132,22 +133,24 @@ html,body{
     <div class="msg" data-time="09:35"><strong>Kaç gibi burada olursunuz, Güneş Hanım?</strong></div>
     <div class="msg me" data-time="09:52 ✓✓">Öğleden sonra varmış olurum.</div>
 
+    <!-- 2×2 kare galeri -->
     <section class="wrap">
       <div class="grid">
-        <figure class="card tall">
+        <figure class="card">
           <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
-          <div class="badge">HD</div><div class="stamp">12:52</div>
+          <div class="hd">HD</div><div class="time">12:52</div>
         </figure>
-        <figure class="card tall">
+        <figure class="card">
           <img src="assets/photo2.jpg" alt="Foto 2" data-hd="assets/photo2.jpg">
-          <div class="badge">HD</div><div class="stamp">12:52</div>
+          <div class="hd">HD</div><div class="time">12:52</div>
         </figure>
         <figure class="card">
           <img src="assets/photo3.jpg" alt="Foto 3" data-hd="assets/photo3.jpg">
-          <div class="badge">HD</div>
+          <div class="hd">HD</div><div class="time">12:52</div>
         </figure>
         <figure class="card more">
-          <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true"><span>+5</span>
+          <img src="assets/photo4.jpg" alt="Daha fazla" aria-hidden="true">
+          <span>+5</span>
         </figure>
       </div>
     </section>
@@ -175,11 +178,12 @@ html,body{
 </div>
 
 <script>
+// SW
 if('serviceWorker' in navigator){ addEventListener('load',()=>navigator.serviceWorker.register('sw.js')); }
 
-// lightbox
+// Lightbox
 const lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img'), closeBtn=lb.querySelector('.close');
-const thumbs=[...document.querySelectorAll('.card img')]; let i=0;
+const thumbs=[...document.querySelectorAll('.card:not(.more) img')]; let i=0;
 function openAt(k){ i=k; const el=thumbs[i]; lbImg.src=el.dataset.hd||el.src; lb.style.display='flex'; }
 function closeLb(){ lb.style.display='none'; }
 thumbs.forEach((t,idx)=>t.addEventListener('click',()=>openAt(idx)));
