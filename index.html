@@ -179,6 +179,44 @@ body{
 /* Saat etiketinin taşmaması için boşluk */
 .msg{ margin-bottom:16px; }
 .msg .t{ bottom:-12px; }
+/* ==== HARD OVERRIDE: boşluk 0 + kare kilidi + büyük görsel ==== */
+.album.nogap { 
+  padding: 4px !important;                 /* foto daha büyük olsun diye küçük padding */
+  border-radius: 22px !important;
+  border: 2px solid #d9ecff !important;
+  margin-left: calc(-1 * var(--gutter)) !important;
+  margin-right: calc(-1 * var(--gutter)) !important;
+}
+
+.album.nogap .grid { 
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  gap: 0 !important;                        /* ARADAKİ BOŞLUK = 0 */
+}
+
+/* Kare kilidi: tüm tarayıcılar */
+.album.nogap .tile { 
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;              /* iç köşeleri köşeli yap */
+  box-shadow: none !important;
+  background: #e6edf5 !important;
+}
+.album.nogap .tile::before{
+  content:"" !important; display:block !important; padding-top:100% !important;
+}
+.album.nogap .tile > img{
+  position:absolute !important; inset:0 !important;
+  width:100% !important; height:100% !important; object-fit:cover !important;
+}
+/* Sadece dış köşeleri yuvarla */
+.album.nogap .tile:nth-child(1){ border-top-left-radius:16px !important; }
+.album.nogap .tile:nth-child(2){ border-top-right-radius:16px !important; }
+.album.nogap .tile:nth-child(3){ border-bottom-left-radius:16px !important; }
+.album.nogap .tile:nth-child(4){ border-bottom-right-radius:16px !important; }
+
+/* İç kontur vs. varsa kapat */
+.album.nogap .tile::after{ content:none !important; }
 
 </style>
 </head>
@@ -234,7 +272,7 @@ body{
     </div>
 
     <!-- 2×2 album -->
-    <section class="album">
+    <section class="album nogap">
       <div class="grid">
         <figure class="tile">
           <img src="assets/photo1.jpg" alt="Foto 1" data-hd="assets/photo1.jpg">
