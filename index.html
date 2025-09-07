@@ -509,19 +509,40 @@ body{
 </div>
 
 <script>
-/* basit lightbox */
-const lb=document.getElementById('lightbox');
-const lbImg=lb.querySelector('img');
-const closeBtn=lb.querySelector('.close');
-document.querySelectorAll('.photo').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    lbImg.src=a.getAttribute('href');
-    lb.style.display='flex';
-  });
+const lb = document.getElementById('lightbox');
+const lbImg = lb.querySelector('img');
+const closeBtn = lb.querySelector('.close');
+const photos = [...document.querySelectorAll('.photo')];
+
+let idx = 0;
+function openAt(i){ idx = i; lbImg.src = photos[i].getAttribute('href'); lb.style.display = 'flex'; }
+function closeLb(){ lb.style.display = 'none'; }
+
+photos.forEach((a,i)=>{
+  a.addEventListener('click', e=>{ e.preventDefault(); openAt(i); });
 });
-closeBtn.addEventListener('click',()=>lb.style.display='none');
-lb.addEventListener('click',e=>{ if(e.target===lb) lb.style.display='none'; });
+closeBtn.addEventListener('click', closeLb);
+lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
+
+// touch swipe
+let startX = null;
+lb.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+lb.addEventListener('touchmove', e=>{
+  if(startX===null) return;
+  const dx = e.touches[0].clientX - startX;
+  if(Math.abs(dx) > 60){
+    idx = (idx + (dx < 0 ? 1 : -1) + photos.length) % photos.length;
+    lbImg.src = photos[idx].getAttribute('href');
+    startX = null;
+  }
+}, {passive:true});
+// klavye ile gezinme (masaüstü)
+addEventListener('keydown', e=>{
+  if(lb.style.display !== 'flex') return;
+  if(e.key==='Escape') closeLb();
+  if(e.key==='ArrowRight') { idx = (idx+1)%photos.length; lbImg.src = photos[idx].getAttribute('href'); }
+  if(e.key==='ArrowLeft')  { idx = (idx-1+photos.length)%photos.length; lbImg.src = photos[idx].getAttribute('href'); }
+});
 </script>
 </body>
 </html>
