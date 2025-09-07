@@ -91,8 +91,8 @@ html,body{
 /* === GALERİ — fotoğraflar daha büyük, kart kompakt === */
 .album{
   background:linear-gradient(180deg,#ffffff,#fcfdff);
-  border-radius:16px;
-  padding:4px;                          /* daha küçük kart = daha büyük foto */
+  border-radius:10px;
+  padding:1px;                          /* daha küçük kart = daha büyük foto */
   box-shadow:var(--shadow-card);
   border:1.5px solid #dfeafb;
   margin-left:calc(-1 * var(--gutter));
@@ -128,7 +128,7 @@ html,body{
 .tile.more .moretxt{ position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-weight:800; font-size:26px; letter-spacing:.5px; text-shadow:0 2px 8px rgba(0,0,0,.4); }
 
 /* Tek büyük görsel — kare ve kart içinde */
-.album.square{ padding:8px; }
+.album.square{ padding:4px; }
 .album.square .tile{ aspect-ratio:1/1; }
 
 /* alt giriş */
@@ -240,7 +240,7 @@ html,body{
   <footer class="inputbar">
     <div class="input">
       <div class="ibtn">😊</div>
-      <input placeholder="Message" aria-label="Mesaj yazın">
+      <input placeholder="Mesaj yazın" aria-label="Mesaj yazın">
       <div class="ibtn">📎</div>
       <div class="ibtn blue">📷</div>
     </div>
