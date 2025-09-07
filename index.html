@@ -292,10 +292,57 @@ body{
   .actions .btn{ width:28px !important; height:28px !important; }
   .title{ font-size:clamp(15px,4.8vw,18px) !important; }
 }
+/* === BAR YÜKSEKLİK DEĞİŞKENİ === */
+:root{ --appbar-h: 56px; }  /* bar yüksekliğini buradan yönet; 54–60 iyi durur */
+
+/* Üstte görünen alan (barın 1.5x’i) */
+.hero{
+  height: calc(var(--appbar-h) * 1.5);
+  /* üst kısım için hafif bir arka plan/derinlik verelim */
+  background: linear-gradient(180deg, rgba(11,109,255,.08), rgba(11,109,255,0) 70%);
+}
+
+/* Bar: sticky + güvenli alan */
+.app{
+  position: sticky !important;
+  top: env(safe-area-inset-top) !important;  /* notch altında yapışsın */
+  z-index: 50 !important;
+
+  /* kompakt padding; yüksekliği sabitlemek için min-height */
+  padding: 0 var(--gutter) !important;
+  min-height: var(--appbar-h) !important;
+
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* iç düzen – başlık ve ikonlar tek satırda kalsın */
+.app-inner{ gap:8px !important; width:100% !important; }
+.back{ width:32px !important; height:32px !important; }
+.app .avatar{
+  width:32px !important; height:32px !important; border-radius:50% !important;
+  object-fit:cover !important; border:2px solid rgba(255,255,255,.6) !important;
+}
+.title{
+  flex:1 1 auto !important; min-width:0 !important;
+  white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
+  font-size:clamp(16px,4.6vw,20px) !important; font-weight:800 !important;
+}
+.actions{ gap:8px !important; }
+.actions .btn{ width:30px !important; height:30px !important; border-radius:10px !important; }
+
+/* çok dar cihazlar için ekstra sıkılaştırma */
+@media (max-width:360px){
+  :root{ --appbar-h: 52px; }
+  .actions .btn{ width:28px !important; height:28px !important; }
+}
+
 </style>
 </head>
 <body>
 <div class="phone">
+<!-- üst boş alan (bar yüksekliğinin 1.5 katı) -->
+<div class="hero"></div>
 
 
   <!-- APP BAR -->
